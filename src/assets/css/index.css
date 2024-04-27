@@ -1,0 +1,17 @@
+/* custom */
+@import url('./typgrapgy.css');
+@import url('./custom-base.css');
+@import url('./custom-utilities.css');
+
+/* typography */
+@import url('src/assets/fonts/PP-Cirka.css');
+@import url('src/assets/fonts/PP-Right-Didone.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+

@@ -1,0 +1,98 @@
+@layer utilities {
+    /* 文型設定 */
+
+    /* #region typgraphy */
+    .text-head-1 {
+      @apply font-optima text-mbHead-1 lg:font-PP-Cirka lg:text-dtHead-1
+    }
+
+    .text-head-2 {
+      @apply font-optima text-mbHead-2 lg:font-PP-Right-Didone lg:text-dtHead-2
+    }
+
+    .text-head-3 {
+      @apply font-optima text-mbHead-3 lg:font-PP-Cirka lg:text-dtHead-3
+    }
+
+    .text-head-4 {
+      @apply font-optima text-mbHead-4 lg:font-PP-Right-Didone lg:text-dtHead-4
+    }
+
+    .text-body-1 {
+      @apply font-PP-Cirka text-mbBody-1  lg:text-dtBody-1
+    }
+
+    .text-body-2 {
+      @apply font-PP-Cirka text-mbBody-2 lg:text-dtBody-2
+    }
+
+    .text-mini {
+      @apply font-PP-Cirka text-mbMini lg:text-dtMini
+    }
+
+    .text-display-1 {
+      @apply font-PP-Cirka text-mbDisplay-1 lg:text-dtDisplay-1
+    }
+
+    .text-display-2 {
+      @apply font-optima lg:font-PP-Cirka text-mbDisplay-2 lg:text-dtDisplay-2
+    }
+
+
+
+    /* #endregion  */
+
+    /* #region font-basic */
+
+
+
+    /*#endregion */
+
+    /* .font-en {
+      & .text-zh-display-1 {
+        @apply tracking-normal;
+      }
+      & .text-zh-display-2 {
+        @apply tracking-normal;
+      }
+      & .text-zh-display-3 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-1 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-2 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-3 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-4 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-5 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-6 {
+        @apply tracking-normal;
+      }
+      & .text-zh-head-7 {
+        @apply tracking-normal;
+      }
+      & .text-zh-button-lg {
+        @apply tracking-normal;
+      }
+      & .text-zh-button-m {
+        @apply tracking-normal;
+      }
+      & .text-zh-body-1 {
+        @apply tracking-normal;
+      }
+      & .text-zh-body-2 {
+        @apply tracking-normal;
+      }
+      & .text-zh-mini {
+        @apply tracking-normal;
+      }
+    } */
+  }

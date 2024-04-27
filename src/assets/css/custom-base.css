@@ -1,0 +1,14 @@
+/*
+ * 屬於全域的設定，作用是 Reset 不想要出現的 html 5 預設樣式
+ */
+
+@layer base {
+  /* 字體渲染設定 */
+  html,
+  body {
+    @apply bg-black text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
+  }
+}

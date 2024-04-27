@@ -1,0 +1,104 @@
+/*
+ * 屬於 Tailwind 原生無法達成的樣式、webkit 效果
+ * class 命名原則盡量與 Tailwind 一致
+ */
+
+@layer utilities {
+  /* 隱藏卷軸 */
+  .scrollbar-none {
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* 防止圖片拖曳 */
+  .no-drag {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+  }
+
+  .no-select {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+  }
+
+  .dev-red {
+    @apply border-[0.5px] border-red-500;
+  }
+
+  .dev-blue {
+    @apply border-[0.5px] border-blue-500;
+  }
+
+  .dev-green {
+    @apply border-[0.5px] border-green-500;
+  }
+
+  .dev-white {
+    @apply border-[0.5px] border-white;
+  }
+
+  .dev-black {
+    @apply border-[0.5px] border-black;
+  }
+
+  .dev-yellow {
+    @apply border-[0.5px] border-yellow-400;
+  }
+
+  .dev-pink {
+    @apply border-[0.5px] border-pink-400;
+  }
+
+  .dev-brown {
+    @apply border-[0.5px] border-amber-700;
+  }
+
+  .dev-gray {
+    @apply border-[0.5px] border-gray-700;
+  }
+
+  .dev-bg-red {
+    @apply bg-red-500/50;
+  }
+
+  .dev-bg-blue {
+    @apply bg-blue-500/50;
+  }
+
+  .dev-bg-green {
+    @apply bg-green-500/50;
+  }
+
+  .dev-bg-white {
+    @apply bg-white/50;
+  }
+
+  .dev-bg-black {
+    @apply bg-black/50;
+  }
+
+  .dev-bg-yellow {
+    @apply bg-yellow-400/50;
+  }
+
+  .dev-bg-pink {
+    @apply bg-pink-400/50;
+  }
+
+  .dev-bg-brown {
+    @apply bg-amber-700/50;
+  }
+
+  .dev-bg-gray {
+    @apply bg-gray-500/50;
+  }
+}
