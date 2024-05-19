@@ -4,8 +4,8 @@
 @import url('./custom-utilities.css');
 
 /* typography */
-@import url('src/assets/fonts/PP-Cirka.css');
-@import url('src/assets/fonts/PP-Right-Didone.css');
+@import url('/src/assets/fonts/PP-Cirka.css');
+@import url('/src/assets/fonts/PP-Right-Didone.css');
 
 @tailwind base;
 @tailwind components;

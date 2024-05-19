@@ -2,20 +2,26 @@
     /* 文型設定 */
 
     /* #region typgraphy */
+
+    .text-head-0
+    {
+      @apply font-PP-Cirka text-mbHead-0
+    }
+
     .text-head-1 {
-      @apply font-optima text-mbHead-1 lg:font-PP-Cirka lg:text-dtHead-1
+      @apply text-mbHead-1 font-PP-Cirka lg:text-dtHead-1
     }
 
     .text-head-2 {
-      @apply font-optima text-mbHead-2 lg:font-PP-Right-Didone lg:text-dtHead-2
+      @apply text-mbHead-2 font-PP-Right-Didone lg:text-dtHead-2
     }
 
     .text-head-3 {
-      @apply font-optima text-mbHead-3 lg:font-PP-Cirka lg:text-dtHead-3
+      @apply text-mbHead-3 font-PP-Cirka lg:text-dtHead-3
     }
 
     .text-head-4 {
-      @apply font-optima text-mbHead-4 lg:font-PP-Right-Didone lg:text-dtHead-4
+      @apply text-mbHead-4 font-PP-Right-Didone lg:text-dtHead-4
     }
 
     .text-body-1 {
@@ -35,12 +41,40 @@
     }
 
     .text-display-2 {
-      @apply font-optima lg:font-PP-Cirka text-mbDisplay-2 lg:text-dtDisplay-2
+      @apply font-PP-Cirka text-mbDisplay-2 lg:text-dtDisplay-2
     }
 
 
 
     /* #endregion  */
+
+    .font--PP-Cirka {
+     @apply font-PP-Cirka;
+    }
+
+    .font--PP-Right-Didone {
+      @apply font-PP-Right-Didone;
+    }
+
+    .font--light
+    {
+      @apply font-light;
+    }
+
+    .font--regular
+    {
+      @apply font-normal;
+    }
+
+    .font--medium
+    {
+      @apply font-medium;
+    }
+
+    .font--bold
+    {
+      @apply font-bold;
+    }
 
     /* #region font-basic */
 
