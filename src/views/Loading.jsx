@@ -1,8 +1,8 @@
-import { gsap } from "gsap";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { gsap } from 'gsap';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
-export default function Loading({ isLoadEnd }) {
+export default function Loading({ className, isLoadEnd }) {
   const progressBar = useRef(null);
 
   useEffect(() => {
@@ -11,29 +11,30 @@ export default function Loading({ isLoadEnd }) {
   }, []);
 
   function init() {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
   }
 
   function animation() {
     gsap.to(progressBar.current, {
       duration: 2,
-      width: "100%",
-      ease: "none",
+      width: '100%',
+      ease: 'none',
       onComplete: () => {
         isLoadEnd();
-        document.body.style.overflowY = "scroll";
-      },
+        document.body.style.overflowY = 'scroll';
+      }
     });
   }
 
   return (
-    <div className="h-screen w-screen gap-8 flex justify-center flex-col items-center bg-black ">
+    <div
+      className={`flex h-screen w-screen flex-col items-center justify-center gap-8 bg-black ${className}`}>
       <div>
-        <div className="text-pr-1 text-[50px] font-PP-Right-Didone font-light">
+        <div className="font-PP-Right-Didone text-[50px] font-light text-pr-1">
           VIBE 400
         </div>
-        <div className="w-[140px] h-[0.5px] bg-gray-gray">
-          <div ref={progressBar} className="w-0 bg-pr-1 h-full"></div>
+        <div className="h-[0.5px] w-[140px] bg-gray-gray">
+          <div ref={progressBar} className="h-full w-0 bg-pr-1"></div>
         </div>
       </div>
     </div>

@@ -9,39 +9,39 @@
     }
 
     .text-head-1 {
-      @apply text-mbHead-1 font-PP-Cirka lg:text-dtHead-1
+      @apply lg:text-mbHead-1 font-PP-Cirka text-dtHead-1
     }
 
     .text-head-2 {
-      @apply text-mbHead-2 font-PP-Right-Didone lg:text-dtHead-2
+      @apply lg:text-mbHead-2 font-PP-Right-Didone text-dtHead-2
     }
 
     .text-head-3 {
-      @apply text-mbHead-3 font-PP-Cirka lg:text-dtHead-3
+      @apply  lg:text-mbHead-3 font-PP-Cirka text-dtHead-3
     }
 
     .text-head-4 {
-      @apply text-mbHead-4 font-PP-Right-Didone lg:text-dtHead-4
+      @apply  lg:text-mbHead-4 font-PP-Right-Didone text-dtHead-4
     }
 
     .text-body-1 {
-      @apply font-PP-Cirka text-mbBody-1  lg:text-dtBody-1
+      @apply font-PP-Cirka lg:text-mbBody-1  text-dtBody-1
     }
 
     .text-body-2 {
-      @apply font-PP-Cirka text-mbBody-2 lg:text-dtBody-2
+      @apply font-PP-Cirka lg:text-mbBody-2 text-dtBody-2
     }
 
     .text-mini {
-      @apply font-PP-Cirka text-mbMini lg:text-dtMini
+      @apply font-PP-Cirka lg:text-mbMini text-dtMini
     }
 
     .text-display-1 {
-      @apply font-PP-Cirka text-mbDisplay-1 lg:text-dtDisplay-1
+      @apply font-PP-Cirka lg:text-mbDisplay-1 text-dtDisplay-1
     }
 
     .text-display-2 {
-      @apply font-PP-Cirka text-mbDisplay-2 lg:text-dtDisplay-2
+      @apply font-PP-Cirka lg:text-mbDisplay-2 text-dtDisplay-2
     }
 
 
