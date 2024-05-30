@@ -11,4 +11,13 @@
     -moz-osx-font-smoothing: grayscale;
     font-smooth: never;
   }
+
+
+  html {
+    @apply body-base;
+    @apply 2xl:body-2xl;
+    @apply 3xl:body-3xl;
+    @apply md:body-md;
+    @apply sm:body-sm;
+  }
 }

@@ -80,7 +80,6 @@ export default {
       easeInCubic: 'cubic-bezier(0.32, 0, 0.67, 0)',
       easeOutQuint: 'cubic-bezier(0.33, 1, 0.68, 1)'
     },
-
     extend: {
       colors: {
         transparent: 'transparent',
@@ -89,7 +88,7 @@ export default {
           2: '#288E3E'
         },
         sec: {
-          1: '#288E3E',
+          1: '#672B11',
           2: '#DBBB76',
           3: '#F3EEE5'
         },
@@ -419,7 +418,13 @@ export default {
           }
         ]
       },
-      backgroundImage: {},
+      variants: {
+        lineClamp: ['responsive', 'hover']
+      },
+      backgroundImage: {
+        contactImg:
+          "url('/src/assets/UI/pexels-outyourhead-magazine-907594.jpg')"
+      }
     }
   },
   plugins: []

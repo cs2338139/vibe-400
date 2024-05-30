@@ -10,6 +10,7 @@ import Loading from './views/Loading';
 import Home from './views/Home';
 import { useEffect, createContext } from 'react';
 import BaseUrlProvider from './context/BaseUrlContext';
+import { div } from 'three/examples/jsm/nodes/Nodes.js';
 
 gsap.registerPlugin(
   Flip,
@@ -23,6 +24,9 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, EaselPlugin);
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    console.log('App component rendered');
+  }, []);
 
   return (
     <BaseUrlProvider>
@@ -34,7 +38,7 @@ function App() {
           }}
         />
       ) : null}
-      <Home isStart={!isLoading} />
+      <Home />
     </BaseUrlProvider>
   );
 }

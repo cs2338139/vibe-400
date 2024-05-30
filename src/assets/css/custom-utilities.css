@@ -101,4 +101,47 @@
   .dev-bg-gray {
     @apply bg-gray-500/50;
   }
+
+
+  #threejs-container {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #threejs-container > canvas {
+    display: inline;
+  }
+
+  .center
+  {
+    @apply left-1/2 -translate-x-1/2
+  }
+
+  .unCenter
+  {
+  @apply left-0 -translate-x-0
+  }
+
+  .body-3xl {
+    font-size: 28px;
+  }
+
+  .body-2xl {
+    font-size: 21.3px;
+  }
+
+  .body-base {
+    font-size: 16px;
+  }
+
+  .body-md {
+    font-size: 15px;
+  }
+
+  .body-sm {
+    font-size: 16px;
+  }
 }

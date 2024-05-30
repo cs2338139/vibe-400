@@ -29,11 +29,11 @@ export default function Loading({ className, isLoadEnd }) {
   return (
     <div
       className={`flex h-screen w-screen flex-col items-center justify-center gap-8 bg-black ${className}`}>
-      <div>
+      <div className="">
         <div className="font-PP-Right-Didone text-[50px] font-light text-pr-1">
           VIBE 400
         </div>
-        <div className="h-[0.5px] w-[140px] bg-gray-gray">
+        <div className="h-[0.5px] w-full bg-gray-gray">
           <div ref={progressBar} className="h-full w-0 bg-pr-1"></div>
         </div>
       </div>
