@@ -28,7 +28,7 @@ export default function Popup({ isOpen, popupClose, className }) {
       className={`flex h-screen w-screen items-center justify-center bg-black/50 ${className}`}>
       <div
         ref={panel}
-        className="border-custom-Primary-0 relative flex h-4/5 w-4/5 max-w-xl flex-col justify-center gap-2 border bg-black p-20 sm:p-8">
+        className="border-custom-Primary-0 relative flex h-4/5 w-4/5 max-w-xl flex-col justify-center gap-2 border bg-black p-20 sm:w-[90%] sm:p-8">
         <button
           onClick={() => {
             popupClose();

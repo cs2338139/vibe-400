@@ -86,7 +86,7 @@ export default function NavBar({ scrollTo, isStart, className }) {
       <a
         href="/"
         target="_blank"
-        className="font-PP-Right-Didone text-[40px] font-light text-sec-3 transition duration-300 hover:text-pr-2">
+        className="font-PP-Right-Didone text-[40px] font-light text-sec-3 transition duration-300 hover:text-pr-2 sm:invisible">
         VIBE 400
       </a>
       <div

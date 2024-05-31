@@ -9,6 +9,7 @@ import Card from '../components/Card';
 import Banner from '../components/Banner';
 import Gallery from '../components/Gallery';
 import Contact from '../components/Contact';
+import Footer from '../components/Footer';
 
 export default function Home({ isStart }) {
   const [isPageStart, setIsPageStart] = useState(false);
@@ -77,7 +78,7 @@ export default function Home({ isStart }) {
         <Banner></Banner>
         <Gallery id="gallery" class="mt-[-2px]"></Gallery>
         <Contact id="contact"></Contact>
-        {/* <Footer></Footer>  */}
+        <Footer></Footer>
       </div>
     </div>
   );
