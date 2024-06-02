@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import CardButton from './Card-Button';
+import arrowBlackSVG from '../assets/UI/arrow-black.svg';
 
 export default function CardItem4({ className }) {
   const path = useRef();
@@ -67,10 +68,7 @@ export default function CardItem4({ className }) {
         <div className="flex h-full w-full flex-col items-center justify-center pr-10 sm:hidden">
           <button className="flex items-center justify-between gap-6">
             <div className="flex h-16 w-16 items-center justify-center rounded-full border border-black">
-              <img
-                className="w-[1.125rem]"
-                src="../src/assets/UI/arrow-black.svg"
-              />
+              <img className="w-[1.125rem]" src={arrowBlackSVG} />
             </div>
             <div className="h-20 overflow-hidden">
               <div className="text-head-1 flex h-20 flex-col items-center justify-center text-black">
