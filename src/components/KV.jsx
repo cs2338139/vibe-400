@@ -50,7 +50,7 @@ export default function KV({ id, isStart, popupOpen }) {
   return (
     <div
       id={id}
-      className="dev-blue relative z-30 h-[64.3125rem] w-full bg-black sm:h-[45.9375rem]">
+      className="relative z-30 h-[64.3125rem] w-full bg-black sm:h-[45.9375rem]">
       <div className="center absolute left-1/2 top-[6.5rem] z-0 aspect-[746/519] w-[46.625rem] -translate-x-1/2 overflow-hidden sm:aspect-square sm:w-full">
         <img
           src={`${baseUrl}/img/elvira-blumfelde-aqui3_h6LLM-unsplash.jpg`}
@@ -97,7 +97,7 @@ export default function KV({ id, isStart, popupOpen }) {
           onClick={() => {
             popupOpen();
           }}>
-          <div className="border-custom-Secondary-2 bg-custom-GrayScale-0 flex h-16 w-16 items-center justify-center rounded-full border transition duration-300 group-hover:bg-pr-2 sm:h-12 sm:w-12">
+          <div className="bg-custom-GrayScale-0 flex h-16 w-16 items-center justify-center rounded-full border border-sec-3 transition duration-300 group-hover:bg-pr-2 sm:h-12 sm:w-12">
             <img className="w-[1.125rem]" src="/src/assets/UI/arrow.svg" />
           </div>
           <div className="h-20 overflow-hidden">

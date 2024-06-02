@@ -11,7 +11,7 @@ export default function Banner() {
       { x: '100%' },
       {
         x: '-100%',
-        duration: 25,
+        duration: 50,
         repeat: -1,
         ease: 'none'
       }
@@ -21,9 +21,9 @@ export default function Banner() {
       { x: '0%' },
       {
         x: '-200%',
-        duration: 25,
+        duration: 50,
         repeat: -1,
-        delay: -12.5,
+        delay: -25,
         ease: 'none'
       }
     );
@@ -32,7 +32,7 @@ export default function Banner() {
       { x: '-100%' },
       {
         x: '100%',
-        duration: 20,
+        duration: 40,
         repeat: -1,
         ease: 'none'
       }
@@ -42,9 +42,9 @@ export default function Banner() {
       { x: '-200%' },
       {
         x: '0%',
-        duration: 20,
+        duration: 40,
         repeat: -1,
-        delay: -10,
+        delay: -20,
         ease: 'none'
       }
     );

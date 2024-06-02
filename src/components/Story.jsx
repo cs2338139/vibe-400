@@ -29,14 +29,14 @@ export default function Story({ className }) {
         start: 'top 30%',
         // end: 'bottom 60%',
         // scrub: true,
-        markers: true,
+        // markers: true,
         onEnter: () => {
           gsap.to(story1.current, { x: 0, duration: 1 });
           gsap.to(story2.current, { x: 0, duration: 1 });
           gsap.to(main.current, {
             marginTop: '0rem',
             marginBottom: '0rem',
-            duration: 1
+            duration: 0.5
           });
         },
         onLeaveBack: () => {
@@ -44,8 +44,8 @@ export default function Story({ className }) {
           gsap.to(story2.current, { x: 160, duration: 1 });
           gsap.to(main.current, {
             marginTop: '-15rem',
-            marginBottom: '-15rem',
-            duration: 1
+            marginBottom: '-12rem',
+            duration: 0.5
           });
         }
       });
@@ -57,10 +57,10 @@ export default function Story({ className }) {
       gsap.set(story2.current, { x: 160 });
       ScrollTrigger.create({
         trigger: main.current,
-        start: 'center 20%',
+        start: 'center 0%',
         // end: 'bottom 60%',
         // scrub: true,
-        markers: true,
+        // markers: true,
         onEnter: () => {
           gsap.to(story1.current, { x: 0, duration: 1 });
           gsap.to(story2.current, { x: 0, duration: 1 });

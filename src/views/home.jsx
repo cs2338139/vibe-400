@@ -73,10 +73,10 @@ export default function Home({ isStart }) {
             setPopupState(true);
           }}
         />
-        <Story id="story" class="-z-10"></Story>
-        <Card></Card>
+        <Story id="story" className="-z-10"></Story>
+        <Card className="z-10"></Card>
         <Banner></Banner>
-        <Gallery id="gallery" class="mt-[-2px]"></Gallery>
+        <Gallery id="gallery" className="mt-[-2px]"></Gallery>
         <Contact id="contact"></Contact>
         <Footer></Footer>
       </div>

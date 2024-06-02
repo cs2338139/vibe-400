@@ -25,6 +25,42 @@ export default function ThreeJS({ className }) {
     camera.position.y = 30;
     camera.position.z = 30;
 
+    const renderer = new THREE.WebGLRenderer(
+      { antialias: true },
+      { alpha: true }
+    );
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.current.appendChild(renderer.domElement);
+    renderer.setClearColor(0x000000, 0);
+
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+
+    const scene = new THREE.Scene();
+
+    scene.environment = pmremGenerator.fromScene(
+      new RoomEnvironment(),
+      1
+    ).texture;
+
+    scene.position.set(0, 15, 0);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    // controls.maxPolarAngle = Math.PI / 2;
+    controls.minDistance = 40;
+    controls.maxDistance = 40;
+    controls.target = new THREE.Vector3(0, 7, 0);
+
+    controls.enableRotate = true;
+    controls.rotateSpeed = 0.3;
+
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 5;
+
     const loader = new GLTFLoader();
     loader.load(
       `${baseUrl}/model/35mm_film_roll.glb`,
@@ -33,7 +69,7 @@ export default function ThreeJS({ className }) {
         console.log('model is onLoad');
         const model = object.scene;
 
-        model.position.set(0, 15, 0);
+        model.position.set(0, 0, 0);
         model.scale.set(50, 50, 50);
         model.castShadow = true;
         scene.add(model);
@@ -45,28 +81,7 @@ export default function ThreeJS({ className }) {
       }
     );
 
-    const renderer = new THREE.WebGLRenderer(
-      { antialias: true },
-      { alpha: true }
-    );
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    container.current.appendChild(renderer.domElement);
-    renderer.setClearColor(0x000000, 0); // set transparent bg
-
-    // attempt to add sadows
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-
-    const scene = new THREE.Scene();
-
-    scene.environment = pmremGenerator.fromScene(
-      new RoomEnvironment(),
-      1
-    ).texture;
-
+    // #region Light
     // lightning and casting shadows
     const light = new THREE.DirectionalLight(0x52663c, 0.5); // soft white light
     light.position.set(15, 20, 0);
@@ -77,26 +92,19 @@ export default function ThreeJS({ className }) {
     light.shadow.mapSize.height = 512; // default
     scene.add(light);
     scene.add(light.target);
+    // #endregion
 
-    // helpers
-    const controls = new OrbitControls(camera, renderer.domElement); // allow users to view around the model
-    controls.enableDamping = true; // adds a physic effect of "inertia" when spinning camera
-    controls.maxPolarAngle = Math.PI / 2 - 0.3; // don't let user view below the ground, 0.3 is slightly above the base level
-    controls.minDistance = 10; // don't let user zoom too close
-    controls.maxDistance = 50; // don't let user zoom too far away
-
-    controls.enableRotate = true;
-    controls.rotateSpeed = 0.3; // set rotation speed of the mouse
-
-    controls.autoRotate = true; // auto rotate
-    controls.autoRotateSpeed = 5; // 30 seconds per orbit when fps is 60
-
+    // #region Help
     // grid helper
-    // const gridHelper = new THREE.GridHelper(200, 50); // add a grid
+    const gridHelper = new THREE.GridHelper(200, 50); // add a grid
+    scene.add(gridHelper);
     // light helper
-    // const helper = new THREE.DirectionalLightHelper(light, 5);
-    // scene.add(gridHelper);
-    // scene.add(helper);
+    const helper = new THREE.DirectionalLightHelper(light, 5);
+    scene.add(helper);
+
+    const helperCamera = new THREE.CameraHelper(camera);
+    scene.add(helperCamera);
+    // #endregion
 
     const animate = () => {
       requestAnimationFrame(animate);
