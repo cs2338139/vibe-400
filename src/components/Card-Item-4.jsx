@@ -69,7 +69,7 @@ export default function CardItem4({ className }) {
             <div className="flex h-16 w-16 items-center justify-center rounded-full border border-black">
               <img
                 className="w-[1.125rem]"
-                src="/src/assets/UI/arrow-black.svg"
+                src="../src/assets/UI/arrow-black.svg"
               />
             </div>
             <div className="h-20 overflow-hidden">

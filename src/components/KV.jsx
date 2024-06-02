@@ -98,7 +98,7 @@ export default function KV({ id, isStart, popupOpen }) {
             popupOpen();
           }}>
           <div className="bg-custom-GrayScale-0 flex h-16 w-16 items-center justify-center rounded-full border border-sec-3 transition duration-300 group-hover:bg-pr-2 sm:h-12 sm:w-12">
-            <img className="w-[1.125rem]" src="/src/assets/UI/arrow.svg" />
+            <img className="w-[1.125rem]" src="../src/assets/UI/arrow.svg" />
           </div>
           <div className="h-20 overflow-hidden">
             <div className="pt-2 transition duration-300 group-hover:-translate-y-1/2 sm:pt-0">
