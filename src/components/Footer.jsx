@@ -1,3 +1,9 @@
+import PropTypes from 'prop-types';
+
+Footer.propTypes = {
+  className: PropTypes.string
+};
+
 export default function Footer(className) {
   return (
     <div

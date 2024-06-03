@@ -1,8 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react';
 import CardItem1 from './Card-Item-1';
 import CardItem2 from './Card-Item-2';
 import CardItem3 from './Card-Item-3';
 import CardItem4 from './Card-Item-4';
+import PropTypes from 'prop-types';
+
+Card.propTypes = {
+  className: PropTypes.string
+};
 
 export default function Card({ className }) {
   return (

@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import KV from '../components/KV';
 import Popup from '../components/Popup';
@@ -10,14 +10,17 @@ import Banner from '../components/Banner';
 import Gallery from '../components/Gallery';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import PropTypes from 'prop-types';
+
+Home.propTypes = {
+  isStart: PropTypes.bool.isRequired
+};
 
 export default function Home({ isStart }) {
   const [isPageStart, setIsPageStart] = useState(false);
   const [popupState, setPopupState] = useState(false);
 
   useEffect(() => {
-    console.log('Home component rendered');
-
     setTimeout(() => {
       ScrollTrigger.refresh();
     }, 2);
@@ -31,7 +34,6 @@ export default function Home({ isStart }) {
 
   function scrollTo(value) {
     let target = '';
-    return;
 
     switch (value) {
       case 'about':
@@ -73,12 +75,12 @@ export default function Home({ isStart }) {
             setPopupState(true);
           }}
         />
-        <Story id="story" className="-z-10"></Story>
-        <Card className="z-10"></Card>
-        <Banner></Banner>
-        <Gallery id="gallery" className="mt-[-2px]"></Gallery>
-        <Contact id="contact"></Contact>
-        <Footer></Footer>
+        <Story id="story" className="-z-10" />
+        <Card className="z-10" />
+        <Banner />
+        <Gallery id="gallery" className="mt-[-2px]" />
+        <Contact id="contact" />
+        <Footer />
       </div>
     </div>
   );

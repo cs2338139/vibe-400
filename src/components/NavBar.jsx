@@ -1,5 +1,12 @@
 import { gsap } from 'gsap';
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+
+NavBar.propTypes = {
+  scrollTo: PropTypes.func.isRequired,
+  isStart: PropTypes.bool.isRequired,
+  className: PropTypes.string
+};
 
 export default function NavBar({ scrollTo, isStart, className }) {
   const barMain = useRef(null);

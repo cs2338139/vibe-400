@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import CardButton from './Card-Button';
+import PropTypes from 'prop-types';
+
+CardItem2.propTypes = {
+  className: PropTypes.string
+};
 
 export default function CardItem2({ className }) {
-  const path = useRef();
   const hand = useRef();
   const [isAnimationStart, setIsAnimationStart] = useState(false);
   const text = useRef();
@@ -27,37 +31,6 @@ export default function CardItem2({ className }) {
   function animation() {
     if (isAnimationStart) return;
     setIsAnimationStart(true);
-    // let tl = gsap.timeline({});
-    // tl.set(path.current, { strokeDasharray: 1900, strokeDashoffset: 0 });
-    // let ctl_1 = gsap.fromTo(
-    //   path.current,
-    //   { strokeDashoffset: 1900 },
-    //   {
-    //     strokeDashoffset: 0,
-    //     duration: 2,
-    //     ease: 'none'
-    //   }
-    // );
-    // let ctl_2 = gsap.to(hand.current, {
-    //   scale: '1.2',
-    //   duration: 0.5
-    // });
-    // let ctl_3 = gsap.to(hand.current, {
-    //   rotate: 330,
-    //   duration: 1
-    // });
-    // let ctl_4 = gsap.to(hand.current, {
-    //   y: '-80',
-    //   x: '+80',
-    //   duration: 0.6,
-    //   repeat: -1,
-    //   yoyo: true,
-    //   ease: 'none'
-    // });
-    // tl.add(ctl_1);
-    // tl.add(ctl_2);
-    // tl.add(ctl_3);
-    // tl.add(ctl_4);
   }
 
   return (

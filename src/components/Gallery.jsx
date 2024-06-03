@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { gsap } from 'gsap';
 import { BaseUrlContext } from '../context/BaseUrlContext';
 import GalleryItem from './Gallery-Item';
@@ -19,7 +19,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=500',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -34,7 +33,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=800',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -49,7 +47,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=400',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -64,7 +61,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=600',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -79,7 +75,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=800',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -94,7 +89,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=800',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -109,7 +103,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=700',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -124,7 +117,6 @@ export default function Gallery() {
           start: 'center 60%',
           end: '+=500',
           scrub: 1
-          // markers: true,
         }
       }
     );
@@ -151,13 +143,13 @@ export default function Gallery() {
           id="L11"
           className="col-start-4 col-end-10 w-[41.1875rem] place-self-end sm:place-self-start"
           img={`${baseUrl}/img/girl-with-red-hat-9X15n493yN4-unsplash.jpg`}>
-          2023-1-23 MusicFestival with sara
+          1997 Christopher Fairbank
         </GalleryItem>
         <GalleryItem
           id="L12"
           className="col-start-10 col-end-13 row-start-2 w-[20.6875rem] place-self-end sm:w-auto sm:place-self-start"
           img={`${baseUrl}/img/girl-with-red-hat-g4U0-PtFtx4-unsplash.jpg`}>
-          2022-12-22 MusicFestival with Ning
+          1997 Christopher Fairbank
         </GalleryItem>
 
         <div
@@ -169,19 +161,19 @@ export default function Gallery() {
           id="L21"
           className="col-start-1 col-end-5 row-start-4 row-end-[12] w-[27.0625rem] place-self-start"
           img={`${baseUrl}/img/yasin-aribuga-57WvjU4wxMI-unsplash.jpg`}>
-          2023-2-12 Mountain Hike with JJ
+          1997 Christopher Fairbank
         </GalleryItem>
         <GalleryItem
           id="L22"
           className="col-start-7 col-end-10 row-start-6 row-end-[12] w-[17.625rem] place-self-end sm:place-self-start"
           img={`${baseUrl}/img/annie-spratt-8aTdXGeFw0E-unsplash.jpg`}>
-          2023-2-12 Mountain Hike with Cat
+          1997 Christopher Fairbank
         </GalleryItem>
         <GalleryItem
           id="L23"
           className="col-start-10 col-end-13 row-start-6 row-end-[15] w-[20.6875rem]"
           img={`${baseUrl}/img/pexels-lanyjade-mondou-14923853.jpg`}>
-          2023-2-12 Mountain Hike with JJ
+          1997 Christopher Fairbank
         </GalleryItem>
 
         <div
@@ -193,13 +185,13 @@ export default function Gallery() {
           id="L31"
           className="col-start-4 col-end-7 row-start-[19] w-[21.875rem] place-self-end sm:place-self-start"
           img={`${baseUrl}/img/isi-parente-uNWNFSgUa1c-unsplash.jpg`}>
-          2023-2-28 Mountain Hike with Teresa
+          1997 Christopher Fairbank
         </GalleryItem>
         <GalleryItem
           id="L32"
           className="col-start-7 col-end-10 row-start-[19] w-[17.625rem] place-self-stretch"
           img={`${baseUrl}/img/girl-with-red-hat-f9myzOvj8KU-unsplash.jpg`}>
-          2023-4-1 Sea with Family
+          1997 Christopher Fairbank
         </GalleryItem>
 
         <div
@@ -211,7 +203,7 @@ export default function Gallery() {
           id="L41"
           className="col-start-4 col-end-13 row-start-[27] w-[63.3125rem]"
           img={`${baseUrl}/img/elvira-blumfelde-aqui3_h6LLM-unsplash.jpg`}>
-          2023-1-23 MusicFestival with sara
+          1997 Christopher Fairbank
         </GalleryItem>
       </div>
     </div>

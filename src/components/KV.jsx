@@ -2,6 +2,13 @@ import { useRef, useEffect, useContext } from 'react';
 import { gsap } from 'gsap';
 import { BaseUrlContext } from '../context/BaseUrlContext';
 import arrowSVG from '../assets/UI/arrow.svg';
+import PropTypes from 'prop-types';
+
+KV.propTypes = {
+  id: PropTypes.string.isRequired,
+  isStart: PropTypes.bool.isRequired,
+  popupOpen: PropTypes.func.isRequired
+};
 
 export default function KV({ id, isStart, popupOpen }) {
   const baseUrl = useContext(BaseUrlContext);

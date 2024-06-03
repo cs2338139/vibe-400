@@ -1,6 +1,12 @@
 import { gsap } from 'gsap';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
+
+Loading.propTypes = {
+  className: PropTypes.string,
+  isLoadEnd: PropTypes.func
+};
 
 export default function Loading({ className, isLoadEnd }) {
   const progressBar = useRef(null);

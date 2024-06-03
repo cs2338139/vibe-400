@@ -1,10 +1,14 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { BaseUrlContext } from '../context/BaseUrlContext';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import PropType from 'prop-types';
+
+ThreeJS.propTypes = {
+  className: PropType.string
+};
 
 export default function ThreeJS({ className }) {
   const container = useRef();
@@ -122,7 +126,7 @@ export default function ThreeJS({ className }) {
 
   return (
     <div className={`${className} `}>
-      <div id="threejs-container" ref={container} className="" />
+      <div id="three-js-container" ref={container} className="" />
     </div>
   );
 }

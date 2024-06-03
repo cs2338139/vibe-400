@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap/gsap-core';
 
 export default function Contact() {
@@ -50,7 +50,7 @@ export default function Contact() {
       </div>
 
       <div
-        className="bg-contactImg mb-10 h-[27.8125rem] w-[82.875rem] bg-cover bg-no-repeat sm:mr-28 sm:max-h-[17.25rem]"
+        className="mb-10 h-[27.8125rem] w-[82.875rem] bg-contactImg bg-cover bg-no-repeat sm:mr-28 sm:max-h-[17.25rem]"
         onMouseMove={OverImg}
         ref={target}
         onMouseLeave={OutImg}>

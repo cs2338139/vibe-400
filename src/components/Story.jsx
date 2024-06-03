@@ -1,8 +1,12 @@
-import { useEffect, useState, useRef, useContext } from 'react';
-import { BaseUrlContext } from '../context/BaseUrlContext';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap/gsap-core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ThreeJS from './ThreeJS';
+import PropTypes from 'prop-types';
+
+Story.propTypes = {
+  className: PropTypes.string
+};
 
 export default function Story({ className }) {
   const main = useRef();
@@ -11,14 +15,10 @@ export default function Story({ className }) {
 
   useEffect(() => {
     animation();
-    console.log('Story component rendered');
   }, []);
 
   function animation() {
     const mm = gsap.matchMedia();
-
-    //breakpoint is 575px
-    const tl = gsap.timeline();
 
     mm.add('(min-width: 575px)', () => {
       gsap.set(main.current, { marginTop: '-15rem', marginBottom: '-15rem' });
@@ -58,13 +58,9 @@ export default function Story({ className }) {
       ScrollTrigger.create({
         trigger: main.current,
         start: 'center 0%',
-        // end: 'bottom 60%',
-        // scrub: true,
-        // markers: true,
         onEnter: () => {
           gsap.to(story1.current, { x: 0, duration: 1 });
           gsap.to(story2.current, { x: 0, duration: 1 });
-          ``;
           gsap.to(main.current, {
             marginTop: '-4.5rem',
             marginBottom: '-4.5rem',

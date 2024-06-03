@@ -8,9 +8,8 @@ import { Observer } from 'gsap/Observer';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import Loading from './views/Loading';
 import Home from './views/Home';
-import { useEffect, createContext } from 'react';
+import { useEffect } from 'react';
 import BaseUrlProvider from './context/BaseUrlContext';
-import { div } from 'three/examples/jsm/nodes/Nodes.js';
 
 gsap.registerPlugin(
   Flip,
@@ -24,9 +23,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, EaselPlugin);
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    console.log('App component rendered');
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <BaseUrlProvider>

@@ -1,4 +1,11 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
+
+import PropTypes from 'prop-types';
+
+CardButton.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
+};
 
 export default function CardButton({ className, children }) {
   const button = useRef();

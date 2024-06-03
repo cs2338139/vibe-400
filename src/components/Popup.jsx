@@ -1,6 +1,13 @@
 import { gsap } from 'gsap';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { BaseUrlContext } from '../context/BaseUrlContext';
+import PropTypes from 'prop-types';
+
+Popup.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  popupClose: PropTypes.func.isRequired,
+  className: PropTypes.string
+};
 
 export default function Popup({ isOpen, popupClose, className }) {
   const baseUrl = useContext(BaseUrlContext);
