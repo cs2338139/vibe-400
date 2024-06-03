@@ -35,7 +35,7 @@ function App() {
           }}
         />
       ) : null}
-      <Home />
+      <Home isStart={!isLoading} />
     </BaseUrlProvider>
   );
 }

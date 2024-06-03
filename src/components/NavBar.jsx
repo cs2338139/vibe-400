@@ -102,23 +102,23 @@ export default function NavBar({ scrollTo, isStart, className }) {
         <div className="flex h-full w-full items-center justify-between gap-6 px-10">
           <div className="flex grow justify-between">
             <button
-              onClick={click('about')}
+              onClick={() => click('about')}
               className="transition duration-300 hover:text-pr-2">
               About
             </button>
             <button
-              onClick={click('story')}
+              onClick={() => click('story')}
               className="transition duration-300 hover:text-pr-2">
               Story
             </button>
             <button
-              onClick={click('gallery')}
+              onClick={() => click('gallery')}
               className="transition duration-300 hover:text-pr-2">
               Gallery
             </button>
           </div>
           /
-          <button className="group flex gap-1" onClick={click('contact')}>
+          <button className="group flex gap-1" onClick={() => click('contact')}>
             <svg
               className="w-[1rem] fill-black transition duration-300 group-hover:fill-pr-2"
               width="20"
@@ -137,7 +137,7 @@ export default function NavBar({ scrollTo, isStart, className }) {
       </div>
       <button
         className="hidden h-[2.625rem] w-[3rem] rounded-full bg-sec-3 p-[1rem] sm:flex"
-        onClick={mButtonAnimation}
+        onClick={() => mButtonAnimation}
         ref={mButtonDiv}>
         <svg
           ref={mButton}

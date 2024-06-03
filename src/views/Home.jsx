@@ -33,7 +33,7 @@ export default function Home({ isStart }) {
   }, [isStart]);
 
   function scrollTo(value) {
-    let target = '';
+    let target = null;
 
     switch (value) {
       case 'about':
@@ -49,6 +49,8 @@ export default function Home({ isStart }) {
         target = '#contact';
         break;
     }
+
+    if (!target) return;
 
     gsap.to(window, { duration: 0.6, scrollTo: target });
   }

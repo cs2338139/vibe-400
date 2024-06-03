@@ -26,7 +26,7 @@ export default function CardButton({ className, children }) {
     <div className={`flex grow items-end justify-start ${className}`}>
       <button
         className="h-[2.5rem] w-[8.1875rem] rounded-full bg-sec-3 text-pr-2 transition-all duration-300 hover:w-[20rem] hover:bg-pr-2 hover:text-sec-3"
-        onClick={Click}
+        onClick={() => Click}
         ref={button}>
         {children}
       </button>

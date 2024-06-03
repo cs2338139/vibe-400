@@ -2,8 +2,13 @@ import { useEffect, useContext, useRef } from 'react';
 import { gsap } from 'gsap';
 import { BaseUrlContext } from '../context/BaseUrlContext';
 import GalleryItem from './Gallery-Item';
+import PropTypes from 'prop-types';
 
-export default function Gallery() {
+Gallery.propTypes = {
+  id: PropTypes.string.isRequired
+};
+
+export default function Gallery({ id }) {
   const baseUrl = useContext(BaseUrlContext);
   const container = useRef(null);
   const q = gsap.utils.selector(container);
@@ -123,7 +128,7 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div ref={container} className="w-full px-14 py-24 sm:px-4">
+    <div ref={container} id={id} className="w-full px-14 py-24 sm:px-4">
       <div className="grid h-full w-full grid-flow-dense gap-3 sm:flex sm:flex-col">
         <button className="text-display-1 col-start-1 col-end-13 row-start-3 -mt-10 mb-10 place-self-center text-center text-sec-3 transition duration-300 hover:scale-110">
           Gallery

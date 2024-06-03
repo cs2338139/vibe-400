@@ -5,10 +5,11 @@ import ThreeJS from './ThreeJS';
 import PropTypes from 'prop-types';
 
 Story.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  id: PropTypes.string.isRequired
 };
 
-export default function Story({ className }) {
+export default function Story({ className, id }) {
   const main = useRef();
   const story1 = useRef();
   const story2 = useRef();
@@ -82,6 +83,7 @@ export default function Story({ className }) {
 
   return (
     <div
+      id={id}
       ref={main}
       className={`${className} flex h-[26.0625rem] w-full items-center justify-between border-t border-pr-2 bg-sec-1 sm:-my-[4.5rem] sm:h-[60rem] sm:flex-col`}>
       <div

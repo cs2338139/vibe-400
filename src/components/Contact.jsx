@@ -1,7 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap/gsap-core';
+import PropTypes from 'prop-types';
 
-export default function Contact() {
+Contact.propTypes = {
+  id: PropTypes.string.isRequired
+};
+export default function Contact({ id }) {
   const mouse = useRef();
   const target = useRef();
   const contact = useRef();
@@ -40,7 +44,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <div className="relative flex w-full flex-col items-center">
+    <div id={id} className="relative flex w-full flex-col items-center">
       <div className="text-display-1 ml-16 text-sec-3 sm:-ml-10" ref={contact}>
         Contact
       </div>
