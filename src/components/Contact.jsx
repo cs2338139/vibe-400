@@ -11,19 +11,31 @@ export default function Contact({ id }) {
   const contact = useRef();
 
   function OverImg(event) {
-    mouse.current.style.display = 'block';
+    // mouse.current.style.display = 'block';
+    gsap.to(mouse.current, {
+      duration: 0.3,
+      opacity: 1,
+      scale: 1,
+      ease: 'power1.out'
+    });
 
-    const bnd = target.current.getBoundingClientRect();
-
-    const localX = event.pageX - bnd.left;
-    const localY = event.pageY - bnd.top - window.scrollY;
-
-    let mouseSize = mouse.current.offsetWidth;
-    mouse.current.style.left = localX + 'px';
-    mouse.current.style.top = localY + mouseSize + 'px';
+    gsap.set(mouse.current, {
+      left: event.clientX - gsap.getProperty(mouse.current, 'width') / 2,
+      top:
+        event.clientY +
+        window.scrollY -
+        gsap.getProperty(mouse.current, 'height') / 2
+    });
   }
+
   function OutImg() {
-    mouse.current.style.display = 'none';
+    // mouse.current.style.display = 'none';
+    gsap.to(mouse.current, {
+      duration: 0.3,
+      opacity: 0,
+      scale: 0,
+      ease: 'power1.out'
+    });
   }
 
   useEffect(() => {
@@ -35,50 +47,57 @@ export default function Contact({ id }) {
         scrollTrigger: {
           trigger: target.current,
           start: 'top 60%',
-          end: '+=800',
-          scrub: 1
-          // markers: true,
+          end: '+=100',
+          scrub: 1,
+          markers: true
         }
       }
     );
   }, []);
 
   return (
-    <div id={id} className="relative flex w-full flex-col items-center">
-      <div className="text-display-1 ml-16 text-sec-3 sm:-ml-10" ref={contact}>
-        Contact
-      </div>
+    <>
+      <div id={id} className="relative flex w-full flex-col items-center">
+        <div className="text-display-1 mb-[5.5625rem] text-sec-3" ref={contact}>
+          Contact
+        </div>
 
-      <div className="text-head-2 my-14 whitespace-nowrap text-center text-pr-1">
-        0975 601 925
-      </div>
-
-      <div
-        className="mb-10 h-[27.8125rem] w-[82.875rem] bg-contactImg bg-cover bg-no-repeat sm:mr-28 sm:max-h-[17.25rem]"
-        onMouseMove={OverImg}
-        ref={target}
-        onMouseLeave={OutImg}>
         <div
-          className="absolute hidden h-[16.5rem] w-[16.5rem] rounded-full backdrop-invert"
-          ref={mouse}></div>
-      </div>
+          className="relative mb-[6.6875rem]  flex h-[27.8125rem] w-[82.875rem] cursor-none flex-col items-center justify-center bg-contactImg bg-cover bg-no-repeat sm:mr-28 sm:max-h-[17.25rem]"
+          onMouseMove={OverImg}
+          ref={target}
+          onMouseLeave={OutImg}>
+          <div className="absolute my-14 -translate-y-14 whitespace-nowrap text-center font-PP-Right-Didone text-[64px] font-[300] text-pr-1">
+            <span>+</span>
+            <span>0</span>
+            <span>9</span>
+            <span>2</span>
+            <span> 9</span>
+            <span>8</span>
+            <span>7</span>
+            <span> 0</span>
+            <span>0</span>
+            <span>9</span>
+          </div>
+        </div>
 
-      <div className="text-display-1 none pointer-events-none absolute left-[-2.375rem] top-[52.5rem] mb-10 text-sec-3 sm:top-[43rem]">
-        ME
-      </div>
-      <div className="text-display-1 pointer-events-none absolute right-[-6.25rem] top-[37.1875rem] text-sec-3 sm:right-[-2.8rem] sm:top-[27rem]">
-        CALL
-      </div>
+        <div className="text-display-1 none pointer-events-none absolute bottom-[-3.625rem] left-[-2.375rem] text-sec-3 sm:top-[43rem]">
+          ME
+        </div>
+        <div className="text-display-1 pointer-events-none absolute right-[-6.25rem] top-[37.1875rem] text-sec-3 sm:right-[-2.8rem] sm:top-[27rem]">
+          CALL
+        </div>
 
-      <div className="text-body-2 mb-[7.5rem] w-[29.625rem] text-center text-sec-3 sm:w-[20rem]">
-        VIBE Photo 400 is a color negative film. The film is sold under the
-        “VIBE Photo” brand. However, the film is manufactured by a different
-        company. Japan is indicated as the country of manufacture. This
-        naturally points to Fujifilm as the producer. The VIBE 400 is designed
-        for color images. The manufacturer specifies the sensitivity with ISO
-        400. Due to this sensitivity, the film is versatile and therefore makes
-        a good figure in everyday life.
+        <div className="text-body-2 mb-[7.3125rem] w-[29.625rem] text-center text-sec-3 sm:w-[20rem]">
+          Sit elit incididunt Lorem minim ea pariatur anim dolor ut veniam amet
+          ad. Ipsum tempor commodo ullamco Lorem incididunt proident nisi
+          nostrud dolore. Et labore minim laboris esse amet eu eu exercitation
+          ea esse velit tempor culpa.
+        </div>
       </div>
-    </div>
+      <div
+        className="no pointer-events-none absolute h-[16.5rem] w-[16.5rem] scale-0 rounded-full opacity-0 backdrop-invert"
+        ref={mouse}></div>
+    </>
   );
 }

@@ -15,7 +15,8 @@ export default function Story({ className, id }) {
   const story2 = useRef();
 
   useEffect(() => {
-    animation();
+    //FIXME open will change height of page, need to fix
+    // animation();
   }, []);
 
   function animation() {
@@ -88,10 +89,10 @@ export default function Story({ className, id }) {
       className={`${className} flex h-[26.0625rem] w-full items-center justify-between border-t border-pr-2 bg-sec-1 sm:-my-[4.5rem] sm:h-[60rem] sm:flex-col`}>
       <div
         ref={story1}
-        className="text-display-1 -ml-80 -mt-80 text-pr-2 sm:ml-0 sm:mt-0">
+        className="text-display-1 -ml-80 text-pr-2 sm:ml-0 sm:mt-0">
         Story
       </div>
-      <ThreeJS className="center sm:unCenter absolute z-10 h-[20rem] w-[20rem] overflow-hidden sm:static"></ThreeJS>
+      <ThreeJS className="center sm:unCenter absolute z-10 h-[26rem] w-[26rem] overflow-hidden sm:static"></ThreeJS>
       <div className="flex w-[29.625rem] flex-col items-center text-center text-pr-2 sm:w-[19.5rem] ">
         <div className="text-heading-2 mb-8 sm:mb-6">Story</div>
         <div className="text-body-2">
@@ -103,7 +104,7 @@ export default function Story({ className, id }) {
       </div>
       <div
         ref={story2}
-        className="text-display-1 -mb-32 -mr-80 text-pr-2 sm:mb-10 sm:mr-0">
+        className="text-display-1 -mr-80 text-pr-2 sm:mb-10 sm:mr-0">
         Story
       </div>
     </div>

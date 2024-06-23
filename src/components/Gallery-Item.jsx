@@ -16,11 +16,13 @@ export default function GalleryItem({
   imageClass
 }) {
   return (
-    <div id={id} className={`${className} flex flex-col items-start gap-4`}>
+    <div
+      id={id}
+      className={`${className} relative flex flex-col items-start gap-4 sm:w-full`}>
       <div
-        className={`flex w-full items-center justify-center overflow-hidden sm:h-[357px] sm:w-[323px] ${imageClass}`}>
+        className={`sm:w-full] flex items-center justify-center overflow-hidden sm:h-[357px] ${imageClass}`}>
         <img
-          className="h-auto w-full max-w-none transition duration-300 hover:scale-110 sm:h-auto sm:w-auto"
+          className="h-auto w-full max-w-none transition duration-300 hover:scale-110"
           src={img}
         />
       </div>
