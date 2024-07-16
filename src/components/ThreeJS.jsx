@@ -6,7 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TransformControls } from 'three/addons/controls/TransformControls.js';
-import { FlyControls } from 'three/addons/controls/FlyControls.js';
+import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import PropType from 'prop-types';
 import * as dat from 'lil-gui';
 
@@ -27,12 +27,10 @@ export default function ThreeJS({ className }) {
     return () => {
       threeRenderer.domElement.remove();
       gui.destroy();
-
     };
   }, []);
 
   const threeScene = () => {
-
     let scene,camera,controls
 
     const renderer = new THREE.WebGLRenderer({ antialias: true },{ alpha: true });
@@ -56,7 +54,6 @@ export default function ThreeJS({ className }) {
 
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         scene.environment = pmremGenerator.fromScene(new RoomEnvironment(),1).texture;
-
 
         const mainCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
         mainCamera.position.set(0,0,15);
@@ -92,107 +89,89 @@ export default function ThreeJS({ className }) {
 
         function help()
         {
-            // const helperCamera = new THREE.CameraHelper(camera);
-            // scene.add(helperCamera);
-            const devCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
+            const helperGrid = new THREE.GridHelper(100, 100, 0x888888, 0x444444);
+            scene.add(helperGrid);
+
+            const helperLight = new THREE.DirectionalLightHelper(light, 5);
+            scene.add(helperLight);
+
+            const helperCamera = new THREE.CameraHelper(mainCamera);
+            scene.add(helperCamera);
+
+            const devCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
             devCamera.position.set(0,0,15);
             devCamera.lookAt(scene.position);
-            // camera=devCamera
 
-            console.log(camera);
-            //FIXME
-            // const devControls = new FlyControls(devCamera, renderer.domElement);
-            // devControls.movementSpeed = 25;
-            // devControls.domElement = renderer.domElement;
-            // devControls.rollSpeed = Math.PI / 24;
-            // devControls.autoForward = false;
-            // devControls.dragToLook = true;
-            // controls=devControls
+            const devControls = new TrackballControls(devCamera, renderer.domElement);
+            devControls.rotateSpeed = 0.5;
+            devControls.zoomSpeed = 0.5;
+            devControls.panSpeed = 0.5;
+            devControls.keys = ['KeyA', 'KeyS', 'KeyD'];
 
-            // window.addEventListener('keydown', (event) => {
-            //   if (event.key === 'c') {
-            //     camera = (camera === mainCamera) ? devCamera : mainCamera;
-            //     controls.enabled = false
-            //     controls = (controls === mainControls) ? devControls : mainControls;
-            //     controls.enabled = true
-            //     console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
-            //   }
-            // });
+            window.addEventListener('keydown', (event) => {
+              if (event.key === 'c') {
+                camera = (camera === mainCamera) ? devCamera : mainCamera;
+                Controlles.enabled = false
+                Controlles = (Controlles === mainControls) ? devControls : mainControls;
+                Controlles.enabled = true
+                console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
+              }
+            });
 
-
-            const helper = new THREE.DirectionalLightHelper(light, 5);
-            scene.add(helper);
-
-            return
             const transformControls = new TransformControls(mainCamera, renderer.domElement);
             scene.add(transformControls);
-            transformControls.mode='translate';
 
             transformControls.addEventListener('dragging-changed', function (event) {
-              controls.enabled = !event.value;
+              Controlles.enabled = !event.value;
             });
 
-            gui.add(transformControls, 'mode', { 'Translate': 'translate', 'Rotate': 'rotate', 'Scale': 'scale' }).name('Control Mode');
+            const targets = {
+              Model: model,
+              Light: light,
+            };
 
-            // #region model
-            transformControls.attach(model);
-            const modelFolder = gui.addFolder('Model');
-            const positionXController = modelFolder.add(model.position, 'x', -10, 10).name('Position X');
-            const positionYController = modelFolder.add(model.position, 'y', -10, 10).name('Position Y');
-            const positionZController = modelFolder.add(model.position, 'z', -10, 10).name('Position Z');
-            const rotationXController = modelFolder.add(model.rotation, 'x', -Math.PI, Math.PI).name('Rotation X');
-            const rotationYController = modelFolder.add(model.rotation, 'y', -Math.PI, Math.PI).name('Rotation Y');
-            const rotationZController = modelFolder.add(model.rotation, 'z', -Math.PI, Math.PI).name('Rotation Z');
-            const scaleXController = modelFolder.add(model.scale, 'x', 0.1, 100).name('Scale X');
-            const scaleYController = modelFolder.add(model.scale, 'y', 0.1, 100).name('Scale Y');
-            const scaleZController = modelFolder.add(model.scale, 'z', 0.1, 100).name('Scale Z');
-            modelFolder.open();
-            // #endregion
+            gui.add(transformControls, 'mode',{ Translate: 'translate', Rotate: 'rotate', Scale: 'scale' })
+                .name('Control Mode')
+                .setValue('translate')
 
-            // #region model
-            transformControls.attach(light);
-            const lightFolder = gui.addFolder('Light');
-            const lightIntensityController = lightFolder.add(light, 'intensity', 0, 1).name('Intensity');
-            const lightColorController = lightFolder.addColor(light, 'color').name('Color');
-            const lightPositionXController = lightFolder.add(light.position, 'x', -10, 10).name('Position X');
-            const lightPositionYController = lightFolder.add(light.position, 'y', -10, 10).name('Position Y');
-            const lightPositionZController = lightFolder.add(light.position, 'z', -10, 10).name('Position Z');
-            const lightRotationXController = lightFolder.add(light.rotation, 'x', -Math.PI, Math.PI).name('Rotation X');
-            const lightRotationYController = lightFolder.add(light.rotation, 'y', -Math.PI, Math.PI).name('Rotation Y');
-            const lightRotationZController = lightFolder.add(light.rotation, 'z', -Math.PI, Math.PI).name('Rotation Z');
-            const lightScaleXController = lightFolder.add(light.scale, 'x', 0.1, 100).name('Scale X');
-            const lightScaleYController = lightFolder.add(light.scale, 'y', 0.1, 100).name('Scale Y');
-            const lightScaleZController = lightFolder.add(light.scale, 'z', 0.1, 100).name('Scale Z');
-            lightFolder.open();
-            // #endregion
+            gui.add(controls, 'selectedTarget', targets)
+                .name('Target')
+                .onChange((selectedModel) => {
+                    transformControls.attach(selectedModel);
+                  })
+                .setValue(model);
+
+            const Controlles=[]
+
+            Object.keys(targets).forEach((name) => {
+              const target = targets[name];
+              const folder = gui.addFolder(name);
+
+              ['x', 'y', 'z'].forEach(axis => {
+                Controlles.push(folder.add(target.position, axis, -10, 10).name(`Position ${axis.toUpperCase()}`));
+                Controlles.push(folder.add(target.rotation, axis, -Math.PI, Math.PI).name(`Rotation ${axis.toUpperCase()}`));
+                Controlles.push(folder.add(target.scale, axis, 0.1, 100).name(`Scale ${axis.toUpperCase()}`));
+              });
+
+              if (name === 'Light') {
+                Controlles.push(folder.add(target, 'intensity', 0, 1).name('Intensity'));
+                Controlles.push(folder.addColor(target, 'color').name('Color'));
+              }
+
+              folder.open();
+            });
 
             transformControls.addEventListener('change', function () {
-              positionXController.updateDisplay();
-              positionYController.updateDisplay();
-              positionZController.updateDisplay();
-              rotationXController.updateDisplay();
-              rotationYController.updateDisplay();
-              rotationZController.updateDisplay();
-              scaleXController.updateDisplay();
-              scaleYController.updateDisplay();
-              scaleZController.updateDisplay();
-
-              lightIntensityController.updateDisplay();
-              lightColorController.updateDisplay();
-              lightPositionXController.updateDisplay();
-              lightPositionYController.updateDisplay();
-              lightPositionZController.updateDisplay();
-              lightRotationXController.updateDisplay();
-              lightRotationYController.updateDisplay();
-              lightRotationZController.updateDisplay();
-              lightScaleXController.updateDisplay();
-              lightScaleYController.updateDisplay();
-              lightScaleZController.updateDisplay();
+              Controlles.forEach((control) => {
+                control.updateDisplay();
+              });
             });
+
         }
 
-        help()
         console.log('init is done')
+        help()
+        update();
       }
       catch(error){
         console.log('An error happened');
@@ -219,18 +198,14 @@ export default function ThreeJS({ className }) {
       });
     }
 
-
-    const update = () => {
+    function update() {
       requestAnimationFrame(update);
-
       camera.updateProjectionMatrix();
       controls.update();
       renderer.render(scene, camera);
     };
 
-
     init();
-    update();
 
     return {renderer:renderer,gui:gui};
   }
