@@ -108,21 +108,11 @@ export default function ThreeJS({ className }) {
             devControls.panSpeed = 0.5;
             devControls.keys = ['KeyA', 'KeyS', 'KeyD'];
 
-            window.addEventListener('keydown', (event) => {
-              if (event.key === 'c') {
-                camera = (camera === mainCamera) ? devCamera : mainCamera;
-                Controlles.enabled = false
-                Controlles = (Controlles === mainControls) ? devControls : mainControls;
-                Controlles.enabled = true
-                console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
-              }
-            });
-
             const transformControls = new TransformControls(mainCamera, renderer.domElement);
             scene.add(transformControls);
 
             transformControls.addEventListener('dragging-changed', function (event) {
-              Controlles.enabled = !event.value;
+              controllers.enabled = !event.value;
             });
 
             const targets = {
@@ -134,37 +124,62 @@ export default function ThreeJS({ className }) {
                 .name('Control Mode')
                 .setValue('translate')
 
-            gui.add(controls, 'selectedTarget', targets)
-                .name('Target')
-                .onChange((selectedModel) => {
-                    transformControls.attach(selectedModel);
-                  })
-                .setValue(model);
-
-            const Controlles=[]
+            const controllers=[]
+            const folders=[]
 
             Object.keys(targets).forEach((name) => {
               const target = targets[name];
               const folder = gui.addFolder(name);
+              folders.push({name, folder});
 
               ['x', 'y', 'z'].forEach(axis => {
-                Controlles.push(folder.add(target.position, axis, -10, 10).name(`Position ${axis.toUpperCase()}`));
-                Controlles.push(folder.add(target.rotation, axis, -Math.PI, Math.PI).name(`Rotation ${axis.toUpperCase()}`));
-                Controlles.push(folder.add(target.scale, axis, 0.1, 100).name(`Scale ${axis.toUpperCase()}`));
+                controllers.push(folder.add(target.position, axis, -10, 10).name(`Position ${axis.toUpperCase()}`));
+                controllers.push(folder.add(target.rotation, axis, -Math.PI, Math.PI).name(`Rotation ${axis.toUpperCase()}`));
+                controllers.push(folder.add(target.scale, axis, 0.1, 100).name(`Scale ${axis.toUpperCase()}`));
               });
 
               if (name === 'Light') {
-                Controlles.push(folder.add(target, 'intensity', 0, 1).name('Intensity'));
-                Controlles.push(folder.addColor(target, 'color').name('Color'));
+                controllers.push(folder.add(target, 'intensity', 0, 1).name('Intensity'));
+                controllers.push(folder.addColor(target, 'color').name('Color'));
               }
 
-              folder.open();
+              folder.close();
             });
 
+            gui.onOpenClose( changedGUI => {
+              let current = null;
+              if(!changedGUI._closed)
+              {
+                folders.forEach((folder) => {
+                  folder.folder.close();
+                });
+
+                current = targets[changedGUI._title];
+                if(current) transformControls.attach(current);
+              }
+            } );
+
             transformControls.addEventListener('change', function () {
-              Controlles.forEach((control) => {
+              controllers.forEach((control) => {
                 control.updateDisplay();
               });
+            });
+
+            window.addEventListener('keydown', (event) => {
+              if (event.key === 'c') {
+                camera = (camera === mainCamera) ? devCamera : mainCamera;
+                controls.enabled = false
+                controls = (controls === mainControls) ? devControls : mainControls;
+                controls.enabled = true
+                console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
+              }
+
+              if (event.key === 'i') {
+                const savedState = gui.save();
+
+                // 輸出或保存狀態
+                console.log(savedState);
+              }
             });
 
         }
