@@ -30,6 +30,14 @@
     user-select: none; /* Standard syntax */
   }
 
+  .lil-gui {
+    --width: 400px;
+    --name-width:20%;
+    --font-size: 14px;
+    --spacing: 10px;
+    --input-font-size: 13px;
+  }
+
   .dev-red {
     @apply border-[0.5px] border-red-500;
   }
