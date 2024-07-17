@@ -192,7 +192,6 @@ export default function ThreeJS({ className }) {
               console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
             }
           });
-
         }
 
         console.log('init is done')
