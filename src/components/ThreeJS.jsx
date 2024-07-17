@@ -113,12 +113,65 @@ export default function ThreeJS({ className }) {
             controls.enabled = !event.value;
           });
 
+          const modes = {
+            Play: {
+              camera: mainCamera,
+              controls: mainControls,
+              folder: null
+            },
+            Development: {
+              camera: devCamera,
+              controls: devControls,
+              folder: null
+            }
+          }
+
+
+          gui.add({ mode: {} }, 'mode', modes)
+            .name('Mode')
+            .setValue('Play')
+            .onChange((value) => {
+              camera = value.camera
+              controls.enabled = false
+              controls = value.controls
+              controls.enabled = true
+              Object.values(modes).forEach((mode) => {
+                if (mode === value) {
+                  mode.folder.open()
+                  mode.folder.show()
+                } else {
+                  mode.folder.close()
+                  mode.folder.hide()
+                }
+              })
+            })
+
+
+
+          modes.Play.folder = gui.addFolder('Play Options');
+
+          modes.Play.folder.add(mainControls, 'rotateSpeed', 0.1, 1, 0.1)
+            .name('Rotate Speed')
+            .setValue(0.3)
+          modes.Play.folder.add(mainControls, 'autoRotate',)
+            .name('Auto Rotate')
+            .setValue(true)
+          modes.Play.folder.add(mainControls, 'autoRotateSpeed', 0.1, 20, 0.1)
+            .name('Auto Rotate Speed')
+            .setValue(2)
+
+          modes.Development.folder = gui.addFolder('Dev Options');
+
+          modes.Development.folder.add(transformControls, 'mode', { Translate: 'translate', Rotate: 'rotate', Scale: 'scale' })
+            .name('Control Mode')
+            .setValue('translate')
+          //TODO dev Option,paly remove helper
+
           const targets = {
             Model: model,
             Light: light,
           };
 
-          gui.add(transformControls, 'mode', { Translate: 'translate', Rotate: 'rotate', Scale: 'scale' }).name('Control Mode').setValue('translate')
           const folders = []
 
           Object.keys(targets).forEach((name) => {
@@ -131,17 +184,23 @@ export default function ThreeJS({ className }) {
                 switch (property) {
                   case 'position':
                     {
-                      folder.add(target[property], axis, -10, 10).name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`).listen();
+                      folder.add(target[property], axis, -10, 10)
+                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
+                        .listen();
                       break;
                     }
                   case 'rotation':
                     {
-                      folder.add(target[property], axis, -Math.PI, Math.PI).name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`).listen();
+                      folder.add(target[property], axis, -Math.PI, Math.PI)
+                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
+                        .listen();
                       break;
                     }
                   case 'scale':
                     {
-                      folder.add(target[property], axis, 0.1, 100).name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`).listen();
+                      folder.add(target[property], axis, 0.1, 100)
+                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
+                        .listen();
                       break;
                     }
                 }
@@ -149,11 +208,17 @@ export default function ThreeJS({ className }) {
             });
 
             if (name === 'Light') {
-              folder.add(target, 'intensity', 0, 1).name('Intensity').listen();
-              folder.addColor(target, 'color').name('Color').listen();
+              folder.add(target, 'intensity', 0, 1)
+                .name('Intensity')
+                .listen();
+
+              folder.addColor(target, 'color')
+                .name('Color')
+                .listen();
             }
 
-            folder.add({ reset: () => { folder.reset() } }, 'reset').name('Reset');
+            folder.add({ reset: () => { folder.reset() } }, 'reset')
+              .name('Reset');
 
             folder.close();
           });
@@ -181,7 +246,8 @@ export default function ThreeJS({ className }) {
               a.click();
               URL.revokeObjectURL(url);
             }
-          }, 'downloadData').name('Download Data');
+          }, 'downloadData')
+            .name('Download Data');
 
           window.addEventListener('keydown', (event) => {
             if (event.key === 'c') {
