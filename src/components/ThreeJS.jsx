@@ -26,6 +26,7 @@ export default function ThreeJS({ className }) {
 
     return () => {
       threeRenderer.domElement.remove();
+      threeSceneResult.removeEventListenerResize();
       gui.destroy();
     };
   }, []);
@@ -38,6 +39,14 @@ export default function ThreeJS({ className }) {
       { alpha: true }
     );
     const gui = new dat.GUI();
+
+    function addEventListenerResize() {
+      window.addEventListener('resize', onWindowResize, false);
+    }
+
+    function removeEventListenerResize() {
+      window.addEventListener('resize', onWindowResize, false);
+    }
 
     async function init() {
       try {
@@ -354,12 +363,22 @@ export default function ThreeJS({ className }) {
         }
 
         console.log('init is done');
+        addEventListenerResize();
         help();
         update();
       } catch (error) {
         console.log('An error happened');
         console.log(error);
       }
+    }
+
+    function onWindowResize() {
+      camera.aspect = 1;
+      camera.updateProjectionMatrix();
+      renderer.setSize(
+        gsap.getProperty(container.current, 'width'),
+        gsap.getProperty(container.current, 'height')
+      );
     }
 
     function loadModel(url) {
@@ -390,7 +409,7 @@ export default function ThreeJS({ className }) {
 
     init();
 
-    return { renderer: renderer, gui: gui };
+    return { renderer: renderer, gui, removeEventListenerResize };
   };
 
   return (
