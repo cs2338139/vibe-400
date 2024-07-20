@@ -48,8 +48,8 @@ export default function Contact({ id }) {
           trigger: target.current,
           start: 'top 60%',
           end: '+=100',
-          scrub: 1,
-          markers: true
+          scrub: 1
+          // markers: true
         }
       }
     );

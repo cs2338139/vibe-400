@@ -318,11 +318,23 @@ export default function ThreeJS({ className }) {
             folder.hide();
           });
 
+
           gui
             .add(
               {
                 downloadData: () => {
-                  const data = JSON.stringify(gui.save());
+                  console.log(gui.save());
+                  const data = JSON.stringify(gui.save(), (key, value) => {
+                    if (
+                      key === 'root' ||
+                      key === 'parent' ||
+                      key === '__controllers' ||
+                      key === '__folders'
+                    ) {
+                      return undefined;
+                    }
+                    return value;
+                  });
                   const blob = new Blob([data], { type: 'application/json' });
                   const url = URL.createObjectURL(blob);
                   const a = document.createElement('a');

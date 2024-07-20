@@ -44,7 +44,7 @@ export default function Gallery({ id }) {
       end: '+=4000',
       pin: true,
       scrub: 1,
-      markers: true
+      // markers: true
     });
   }
 
