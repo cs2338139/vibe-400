@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 import { useEffect, useRef, useContext } from 'react';
 import { gsap } from 'gsap/gsap-core';
 import { BaseUrlContext } from '../context/BaseUrlContext';
@@ -9,7 +10,6 @@ import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import PropType from 'prop-types';
 import * as dat from 'lil-gui';
-
 
 ThreeJS.propTypes = {
   className: PropType.string
@@ -31,9 +31,12 @@ export default function ThreeJS({ className }) {
   }, []);
 
   const threeScene = () => {
-    let scene, camera, controls
+    let scene, camera, controls;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true }, { alpha: true });
+    const renderer = new THREE.WebGLRenderer(
+      { antialias: true },
+      { alpha: true }
+    );
     const gui = new dat.GUI();
 
     async function init() {
@@ -44,7 +47,10 @@ export default function ThreeJS({ className }) {
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setClearColor(0x000000, 0);
-        renderer.setSize(gsap.getProperty(container.current, 'width'), gsap.getProperty(container.current, 'height'));
+        renderer.setSize(
+          gsap.getProperty(container.current, 'width'),
+          gsap.getProperty(container.current, 'height')
+        );
         container.current.appendChild(renderer.domElement);
         // #endregion
 
@@ -52,7 +58,10 @@ export default function ThreeJS({ className }) {
         scene.position.set(0, 0, 0);
 
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 1).texture;
+        scene.environment = pmremGenerator.fromScene(
+          new RoomEnvironment(),
+          1
+        ).texture;
 
         const mainCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
         mainCamera.position.set(0, 0, 15);
@@ -68,13 +77,19 @@ export default function ThreeJS({ className }) {
         mainControls.autoRotateSpeed = 2;
         controls = mainControls;
 
-        const model = await loadModel(`${baseUrl}/model/unicorn gumroad-modified.glb`);
+        const model = await loadModel(
+          `${baseUrl}/model/unicorn gumroad-modified.glb`
+        );
 
         model.scale.set(42, 42, 42);
         model.castShadow = true;
         scene.add(model);
 
-        mainControls.target = new THREE.Vector3(model.position.x, model.position.y, model.position.z);
+        mainControls.target = new THREE.Vector3(
+          model.position.x,
+          model.position.y,
+          model.position.z
+        );
 
         // #region Light
         const light = new THREE.DirectionalLight(0x52663c, 1); // soft white light
@@ -88,183 +103,260 @@ export default function ThreeJS({ className }) {
 
         function help() {
           const helperGrid = new THREE.GridHelper(100, 100, 0x888888, 0x444444);
-          scene.add(helperGrid);
-
           const helperLight = new THREE.DirectionalLightHelper(light, 5);
-          scene.add(helperLight);
-
           const helperCamera = new THREE.CameraHelper(mainCamera);
-          scene.add(helperCamera);
 
           const devCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
           devCamera.position.set(0, 0, 15);
           devCamera.lookAt(scene.position);
 
-          const devControls = new TrackballControls(devCamera, renderer.domElement);
+          const devControls = new TrackballControls(
+            devCamera,
+            renderer.domElement
+          );
           devControls.rotateSpeed = 0.5;
           devControls.zoomSpeed = 0.5;
           devControls.panSpeed = 0.5;
-          devControls.keys = ['KeyA', 'KeyS', 'KeyD'];
+          // devControls.keys = ['KeyA', 'KeyS', 'KeyD'];
 
-          const transformControls = new TransformControls(mainCamera, renderer.domElement);
+          const transformControls = new TransformControls(
+            mainCamera,
+            renderer.domElement
+          );
           scene.add(transformControls);
 
-          transformControls.addEventListener('dragging-changed', function (event) {
-            controls.enabled = !event.value;
-          });
+          transformControls.addEventListener(
+            'dragging-changed',
+            function (event) {
+              controls.enabled = !event.value;
+            }
+          );
 
+          //TAG: modes ///
           const modes = {
-            Play: {
+            play: {
               camera: mainCamera,
               controls: mainControls,
-              folder: null
+              folder: null,
+              action: () => {
+                scene.remove(helperGrid);
+                scene.remove(helperLight);
+                scene.remove(helperCamera);
+              }
             },
-            Development: {
+            development: {
               camera: devCamera,
               controls: devControls,
-              folder: null
+              folder: null,
+              action: () => {
+                scene.add(helperGrid);
+                scene.add(helperLight);
+                scene.add(helperCamera);
+              }
             }
-          }
-
-
-          gui.add({ mode: {} }, 'mode', modes)
-            .name('Mode')
-            .setValue('Play')
-            .onChange((value) => {
-              camera = value.camera
-              controls.enabled = false
-              controls = value.controls
-              controls.enabled = true
-              Object.values(modes).forEach((mode) => {
-                if (mode === value) {
-                  mode.folder.open()
-                  mode.folder.show()
-                } else {
-                  mode.folder.close()
-                  mode.folder.hide()
-                }
-              })
-            })
-
-
-
-          modes.Play.folder = gui.addFolder('Play Options');
-
-          modes.Play.folder.add(mainControls, 'rotateSpeed', 0.1, 1, 0.1)
-            .name('Rotate Speed')
-            .setValue(0.3)
-          modes.Play.folder.add(mainControls, 'autoRotate',)
-            .name('Auto Rotate')
-            .setValue(true)
-          modes.Play.folder.add(mainControls, 'autoRotateSpeed', 0.1, 20, 0.1)
-            .name('Auto Rotate Speed')
-            .setValue(2)
-
-          modes.Development.folder = gui.addFolder('Dev Options');
-
-          modes.Development.folder.add(transformControls, 'mode', { Translate: 'translate', Rotate: 'rotate', Scale: 'scale' })
-            .name('Control Mode')
-            .setValue('translate')
-          //TODO dev Option,paly remove helper
-
-          const targets = {
-            Model: model,
-            Light: light,
           };
 
-          const folders = []
-
-          Object.keys(targets).forEach((name) => {
-            const target = targets[name];
-            const folder = gui.addFolder(name);
-            folders.push({ name, folder });
-
-            ['position', 'rotation', 'scale'].forEach(property => {
-              ['x', 'y', 'z'].forEach(axis => {
-                switch (property) {
-                  case 'position':
-                    {
-                      folder.add(target[property], axis, -10, 10)
-                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
-                        .listen();
-                      break;
-                    }
-                  case 'rotation':
-                    {
-                      folder.add(target[property], axis, -Math.PI, Math.PI)
-                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
-                        .listen();
-                      break;
-                    }
-                  case 'scale':
-                    {
-                      folder.add(target[property], axis, 0.1, 100)
-                        .name(`${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`)
-                        .listen();
-                      break;
-                    }
+          gui
+            .add({ mode: {} }, 'mode', modes)
+            .name('Mode')
+            .setValue('play')
+            .onChange((value) => {
+              camera = value.camera;
+              controls.enabled = false;
+              controls = value.controls;
+              controls.enabled = true;
+              value.action();
+              Object.values(modes).forEach((mode) => {
+                if (mode === value) {
+                  mode.folder.open().show();
+                } else {
+                  mode.folder.close().hide();
                 }
               });
             });
 
-            if (name === 'Light') {
-              folder.add(target, 'intensity', 0, 1)
-                .name('Intensity')
-                .listen();
+          modes.play.folder = gui.addFolder('Play Options');
+          modes.play.folder
+            .add(mainControls, 'rotateSpeed', 0.1, 1, 0.1)
+            .name('Rotate Speed')
+            .setValue(0.3);
+          modes.play.folder
+            .add(mainControls, 'autoRotate')
+            .name('Auto Rotate')
+            .setValue(true);
+          modes.play.folder
+            .add(mainControls, 'autoRotateSpeed', 0.1, 20, 0.1)
+            .name('Auto Rotate Speed')
+            .setValue(2);
 
-              folder.addColor(target, 'color')
-                .name('Color')
-                .listen();
+          modes.development.folder = gui.addFolder('Dev Options').hide();
+          modes.development.folder
+            .add(
+              {
+                reset: () => {
+                  modes.development.camera.position.set(0, 0, 15);
+                }
+              },
+              'reset'
+            )
+            .name('Reset DEV Camera');
+
+          //TAG: targets ///
+          const targets = {
+            none: {
+              target: null,
+              folder: null
+            },
+            model: {
+              target: model,
+              folder: null
+            },
+            light: {
+              target: light,
+              folder: null
+            }
+          };
+          let controlMode = null;
+
+          gui
+            .add({ target: {} }, 'target', targets)
+            .name('Target')
+            .setValue('none')
+            .onChange((value) => {
+              Object.values(targets).forEach((target) => {
+                if (!target.target) {
+                  transformControls.detach();
+                  controlMode.hide();
+                  return;
+                }
+                controlMode.show();
+                if (target === value) {
+                  transformControls.attach(target.target);
+                  target.folder.open().show();
+                } else {
+                  target.folder.close().hide();
+                }
+              });
+            });
+
+          controlMode = gui
+            .add(transformControls, 'mode', {
+              Translate: 'translate',
+              Rotate: 'rotate',
+              Scale: 'scale'
+            })
+            .name('Control Mode')
+            .setValue('translate')
+            .hide();
+
+          Object.keys(targets).forEach((name) => {
+            if (name === 'none') return;
+            const target = targets[name].target;
+            const folder = gui.addFolder(name);
+            targets[name].folder = folder;
+
+            ['position', 'rotation', 'scale'].forEach((property) => {
+              ['x', 'y', 'z'].forEach((axis) => {
+                switch (property) {
+                  case 'position': {
+                    folder
+                      .add(target[property], axis, -10, 10)
+                      .name(
+                        `${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`
+                      )
+                      .listen();
+                    break;
+                  }
+                  case 'rotation': {
+                    folder
+                      .add(target[property], axis, -Math.PI, Math.PI)
+                      .name(
+                        `${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`
+                      )
+                      .listen();
+                    break;
+                  }
+                  case 'scale': {
+                    folder
+                      .add(target[property], axis, 0.1, 100)
+                      .name(
+                        `${property.charAt(0).toUpperCase() + property.slice(1)} ${axis.toUpperCase()}`
+                      )
+                      .listen();
+                    break;
+                  }
+                }
+              });
+            });
+
+            if (name === 'light') {
+              folder.add(target, 'intensity', 0, 1).name('Intensity').listen();
+
+              folder.addColor(target, 'color').name('Color').listen();
             }
 
-            folder.add({ reset: () => { folder.reset() } }, 'reset')
+            folder
+              .add(
+                {
+                  reset: () => {
+                    folder.reset();
+                  }
+                },
+                'reset'
+              )
               .name('Reset');
 
-            folder.close();
+            folder.hide();
           });
 
-          gui.onOpenClose(changedGUI => {
-            let current = null;
-            if (!changedGUI._closed) {
-              folders.forEach((folder) => {
-                folder.folder.close();
-              });
-
-              current = targets[changedGUI._title];
-              if (current) transformControls.attach(current);
-            }
-          });
-
-          gui.add({
-            downloadData: () => {
-              const data = JSON.stringify(gui.save());
-              const blob = new Blob([data], { type: 'application/json' });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = 'vibe-400-gui.json';
-              a.click();
-              URL.revokeObjectURL(url);
-            }
-          }, 'downloadData')
+          gui
+            .add(
+              {
+                downloadData: () => {
+                  const data = JSON.stringify(gui.save());
+                  const blob = new Blob([data], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'vibe-400-gui.json';
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }
+              },
+              'downloadData'
+            )
             .name('Download Data');
+
+          gui.hide();
 
           window.addEventListener('keydown', (event) => {
             if (event.key === 'c') {
-              camera = (camera === mainCamera) ? devCamera : mainCamera;
-              controls.enabled = false
-              controls = (controls === mainControls) ? devControls : mainControls;
-              controls.enabled = true
-              console.log('Switching camera:', camera === mainCamera ? 'Main Camera' : 'Development CameraHelper')
+              camera = camera === mainCamera ? devCamera : mainCamera;
+              controls.enabled = false;
+              controls = controls === mainControls ? devControls : mainControls;
+              controls.enabled = true;
+              console.log(
+                'Switching camera:',
+                camera === mainCamera
+                  ? 'Main Camera'
+                  : 'Development CameraHelper'
+              );
+            }
+            if (event.key === 'p') {
+              console.log('trigger Panel');
+              if (gui._hidden) {
+                gui.show();
+              } else {
+                gui.hide();
+              }
             }
           });
         }
 
-        console.log('init is done')
-        help()
+        console.log('init is done');
+        help();
         update();
-      }
-      catch (error) {
+      } catch (error) {
         console.log('An error happened');
         console.log(error);
       }
@@ -275,16 +367,16 @@ export default function ThreeJS({ className }) {
         const loader = new GLTFLoader();
         loader.load(
           url,
-          gltf => {
+          (gltf) => {
             const model = new THREE.Group();
             gltf.scene.position.set(0.015, -0.08, 0);
             gltf.scene.rotateY(-Math.PI);
             model.add(gltf.scene);
 
-            resolve(model)
+            resolve(model);
           }, // 當模型加載完成時，我們解析Promise
           undefined,
-          error => reject(error) // 如果有錯誤，我們拒絕Promise
+          (error) => reject(error) // 如果有錯誤，我們拒絕Promise
         );
       });
     }
@@ -294,12 +386,12 @@ export default function ThreeJS({ className }) {
       camera.updateProjectionMatrix();
       controls.update();
       renderer.render(scene, camera);
-    };
+    }
 
     init();
 
     return { renderer: renderer, gui: gui };
-  }
+  };
 
   return (
     <div className={`${className}`}>
