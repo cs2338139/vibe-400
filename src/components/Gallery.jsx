@@ -41,10 +41,9 @@ export default function Gallery({ id }) {
       animation: panelAnimation,
       trigger: container.current,
       start: 'top top',
-      end: '+=4000',
+      end: '+=3500',
       pin: true,
-      scrub: 1,
-      // markers: true
+      scrub: 1
     });
   }
 
