@@ -87,7 +87,7 @@ export default function ThreeJS({ className }) {
         controls = mainControls;
 
         const model = await loadModel(
-          `${baseUrl}/model/unicorn gumroad-modified.glb`
+          `${baseUrl}/model/unicorn gumroad-modified21.glb`
         );
 
         model.scale.set(42, 42, 42);
@@ -426,7 +426,7 @@ export default function ThreeJS({ className }) {
 
   return (
     <div className={`${className}`}>
-      <div id="three-js-container" ref={container} className="dev-red" />
+      <div id="three-js-container" ref={container} className="" />
     </div>
   );
 }
