@@ -12,58 +12,58 @@ export default function NavBar({ scrollTo, isStart, className }) {
   const barMain = useRef(null);
   const mButton = useRef(null);
   const mButtonDiv = useRef(null);
-  const [mButtonState, setMButtonState] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isStart) {
-      start();
+      animateNavBarEntry();
     }
   }, [isStart]);
 
-  function click(target) {
+  const handleNavClick = (target) => {
     scrollTo(target);
-  }
+  };
 
-  function mButtonAnimation() {
-    setMButtonState(!mButtonState);
+  const toggleMobileMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
 
-    if (mButtonState) {
-      gsap.to(mButton.current.children[0], {
-        duration: 0.5,
-        attr: { x1: 0, y1: 12.5, stroke: 'rgb(243,238,229)' }
-      });
-      gsap.to(mButton.current.children[1], { duration: 0.5, strokeOpacity: 0 });
-      gsap.to(mButton.current.children[2], {
-        duration: 0.5,
-        attr: { x1: 0, y1: 0.5, stroke: 'rgb(243,238,229)' }
-      });
-      gsap.to(mButtonDiv.current, {
-        duration: 0.5,
-        backgroundColor: 'rgb(40,142,62)'
-      });
-    } else {
-      gsap.to(mButton.current.children[0], {
-        duration: 0.5,
-        attr: { x1: 0, y1: 0.5, stroke: 'rgb(0,0,0)' }
-      });
-      gsap.to(mButton.current.children[1], { duration: 0.5, strokeOpacity: 1 });
-      gsap.to(mButton.current.children[2], {
-        duration: 0.5,
-        attr: { x1: 6, y1: 12.5, stroke: 'rgb(0,0,0)' }
-      });
-      gsap.to(mButtonDiv.current, {
-        duration: 0.5,
-        backgroundColor: 'rgb(243,238,229)'
-      });
-    }
-  }
+    const [topLine, middleLine, bottomLine] = mButton.current.children;
+    const menuButton = mButtonDiv.current;
 
-  function start() {
-    tl_Main();
-  }
+    const lineConfig = isMenuOpen
+      ? {
+          top: { x1: 0, y1: 0.5, stroke: 'rgb(0,0,0)' },
+          middle: { opacity: 1 },
+          bottom: { x1: 6, y1: 12.5, stroke: 'rgb(0,0,0)' },
+          bg: 'rgb(243,238,229)'
+        }
+      : {
+          top: { x1: 0, y1: 12.5, stroke: 'rgb(243,238,229)' },
+          middle: { opacity: 0 },
+          bottom: { x1: 0, y1: 0.5, stroke: 'rgb(243,238,229)' },
+          bg: 'rgb(40,142,62)'
+        };
 
-  function tl_Main() {
-    let tl = gsap.timeline();
+    gsap.to(topLine, {
+      duration: 0.5,
+      attr: lineConfig.top
+    });
+    gsap.to(middleLine, {
+      duration: 0.5,
+      strokeOpacity: lineConfig.middle.opacity
+    });
+    gsap.to(bottomLine, {
+      duration: 0.5,
+      attr: lineConfig.bottom
+    });
+    gsap.to(menuButton, {
+      duration: 0.5,
+      backgroundColor: lineConfig.bg
+    });
+  };
+
+  const animateNavBarEntry = () => {
+    const tl = gsap.timeline();
 
     tl.fromTo(
       barMain.current,
@@ -79,13 +79,18 @@ export default function NavBar({ scrollTo, isStart, className }) {
           barMain.current.children[0].style.opacity = '0';
         }
       }
-    );
-    tl.fromTo(
+    ).fromTo(
       barMain.current.children[0],
       { opacity: 0 },
       { opacity: 1, duration: 0.3 }
     );
-  }
+  };
+
+  const navItems = [
+    { label: 'About', target: 'about' },
+    { label: 'Story', target: 'story' },
+    { label: 'Gallery', target: 'gallery' }
+  ];
 
   return (
     <div
@@ -101,24 +106,19 @@ export default function NavBar({ scrollTo, isStart, className }) {
         className="text-body-2 h-14 max-w-[500px] rounded-full bg-sec-3 text-gray-black sm:hidden">
         <div className="flex h-full w-full items-center justify-between gap-6 px-10">
           <div className="flex grow justify-between">
-            <button
-              onClick={() => click('about')}
-              className="transition duration-300 hover:text-pr-2">
-              About
-            </button>
-            <button
-              onClick={() => click('story')}
-              className="transition duration-300 hover:text-pr-2">
-              Story
-            </button>
-            <button
-              onClick={() => click('gallery')}
-              className="transition duration-300 hover:text-pr-2">
-              Gallery
-            </button>
+            {navItems.map(({ label, target }) => (
+              <button
+                key={target}
+                onClick={() => handleNavClick(target)}
+                className="transition duration-300 hover:text-pr-2">
+                {label}
+              </button>
+            ))}
           </div>
           /
-          <button className="group flex gap-1" onClick={() => click('contact')}>
+          <button
+            className="group flex gap-1"
+            onClick={() => handleNavClick('contact')}>
             <svg
               className="w-[1rem] fill-black transition duration-300 group-hover:fill-pr-2"
               width="20"
@@ -137,7 +137,7 @@ export default function NavBar({ scrollTo, isStart, className }) {
       </div>
       <button
         className="hidden h-[2.625rem] w-[3rem] rounded-full bg-sec-3 p-[1rem] sm:flex"
-        onClick={() => mButtonAnimation}
+        onClick={toggleMobileMenu}
         ref={mButtonDiv}>
         <svg
           ref={mButton}
