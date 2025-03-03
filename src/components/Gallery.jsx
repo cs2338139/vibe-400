@@ -17,8 +17,8 @@ export default function Gallery({ id }) {
   const q = gsap.utils.selector(container);
 
   useEffect(() => {
-    animation();
-    itemMoveOnAnimation();
+    // animation();
+    // itemMoveOnAnimation();
     return () => {
       scrollTrigger.current?.kill();
     };
@@ -83,7 +83,7 @@ export default function Gallery({ id }) {
       id={id}
       className="dev-green relative flex h-screen w-full flex-col items-center justify-center">
       <GalleryCanvas />
-      <div
+      {/* <div
         id="panel"
         className="dev-blue absolute  left-0 top-[100vh] w-full px-14 py-24 sm:px-4">
         <div className="grid w-full grid-flow-dense gap-3 sm:flex sm:flex-col">
@@ -172,7 +172,7 @@ export default function Gallery({ id }) {
             1997 Christopher Fairbank
           </GalleryItem>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
