@@ -1,14 +1,7 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-GalleryItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  img: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  imageClass: PropTypes.string
-};
-
-export default function GalleryItem({
+const GalleryItem = memo(function GalleryItem({
   id,
   className,
   img,
@@ -24,9 +17,22 @@ export default function GalleryItem({
         <img
           className="h-auto w-full max-w-none transition duration-300 hover:scale-110"
           src={img}
+          loading="lazy"
+          decoding="async"
+          alt={children}
         />
       </div>
       <div className="text-center-body-1 text-pr-2">{children}</div>
     </div>
   );
-}
+});
+
+GalleryItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  img: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  imageClass: PropTypes.string
+};
+
+export default GalleryItem;

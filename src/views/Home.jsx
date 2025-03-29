@@ -20,52 +20,50 @@ export default function Home({ isStart }) {
   const [isPageStart, setIsPageStart] = useState(false);
   const [popupState, setPopupState] = useState(false);
 
+  // Refresh ScrollTrigger after initial render
   useEffect(() => {
-    setTimeout(() => {
+    const refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 2);
+
+    return () => clearTimeout(refreshTimer);
   }, []);
 
+  // Handle page start state
   useEffect(() => {
     if (isStart) {
       setIsPageStart(true);
     }
   }, [isStart]);
 
-  function scrollTo(value) {
-    let target = null;
+  // Scroll to section handler
+  const scrollTo = (section) => {
+    const sectionMap = {
+      about: '#about',
+      story: '#story',
+      gallery: '#gallery',
+      contact: '#contact'
+    };
 
-    switch (value) {
-      case 'about':
-        target = '#about';
-        break;
-      case 'story':
-        target = '#story';
-        break;
-      case 'gallery':
-        target = '#gallery';
-        break;
-      case 'contact':
-        target = '#contact';
-        break;
-    }
-
+    const target = sectionMap[section];
     if (!target) return;
 
-    gsap.to(window, { duration: 0.6, scrollTo: target });
-  }
+    gsap.to(window, {
+      duration: 0.6,
+      scrollTo: target,
+      ease: 'power2.inOut'
+    });
+  };
 
   return (
-    <div className="">
+    <div className="relative">
       <NavBar
         isStart={isPageStart}
         className="fixed z-[40]"
         scrollTo={scrollTo}
       />
       <Popup
-        popupClose={() => {
-          setPopupState(false);
-        }}
+        popupClose={() => setPopupState(false)}
         isOpen={popupState}
         className="fixed z-50 hidden"
       />
@@ -73,9 +71,7 @@ export default function Home({ isStart }) {
         <KV
           id="about"
           isStart={isPageStart}
-          popupOpen={() => {
-            setPopupState(true);
-          }}
+          popupOpen={() => setPopupState(true)}
         />
         <Story id="story" className="-z-10" />
         <Card className="z-10" />

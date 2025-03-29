@@ -63,12 +63,14 @@ export default function KV({ id, isStart, popupOpen }) {
         <img
           src={`${baseUrl}/img/elvira-blumfelde-aqui3_h6LLM-unsplash.jpg`}
           className="absolute -top-52 left-0 scale-[1.2] sm:top-4 sm:scale-[2]"
+          alt="Film background"
         />
       </div>
       <div className="absolute left-[61%] top-0 -z-20 aspect-[503/417] w-[31.4375rem] overflow-hidden sm:left-[90%] ">
         <img
           src={`${baseUrl}/img/elvira-blumfelde-aqui3_h6LLM-unsplash.jpg`}
           className="absolute -top-60 left-0 scale-[2]"
+          alt="Film background"
         />
       </div>
 
@@ -96,17 +98,16 @@ export default function KV({ id, isStart, popupOpen }) {
       <div className="sm:center absolute bottom-[10rem] left-20 flex w-[29.625rem] flex-col gap-10 sm:bottom-[2rem] sm:w-[19.5rem] sm:gap-8">
         <div className="text-body-2 text-sec-3">
           VIBE Photo 400 is a color negative film. The film is sold under the
-          “VIBE Photo” brand. However, the film is manufactured by a different
-          company. Japan is indicated as the country of manufacture. This
-          naturally points to Fujifilm as the producer.
+          &ldquo;VIBE Photo&rdquo; brand. However, the film is manufactured by a
+          different company. Japan is indicated as the country of manufacture.
+          This naturally points to Fujifilm as the producer.
         </div>
         <button
           className="group flex items-center justify-between gap-6 self-end transition duration-300 sm:gap-3 sm:self-start"
-          onClick={() => {
-            popupOpen();
-          }}>
+          onClick={popupOpen}
+          aria-label="View all photos">
           <div className="bg-custom-GrayScale-0 flex h-16 w-16 items-center justify-center rounded-full border border-sec-3 transition duration-300 group-hover:bg-pr-2 sm:h-12 sm:w-12">
-            <img className="w-[1.125rem]" src={arrowSVG} />
+            <img className="w-[1.125rem]" src={arrowSVG} alt="Arrow icon" />
           </div>
           <div className="h-20 overflow-hidden">
             <div className="pt-2 transition duration-300 group-hover:-translate-y-1/2 sm:pt-0">

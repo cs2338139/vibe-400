@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BaseUrlContext } from '../context/BaseUrlContext';
 import GalleryItem from './Gallery-Item';
 import PropTypes from 'prop-types';
+import GalleryCanvas from './GalleryCanvas';
 
 Gallery.propTypes = {
   id: PropTypes.string.isRequired
@@ -14,28 +15,25 @@ export default function Gallery({ id }) {
   const container = useRef(null);
   const scrollTrigger = useRef();
   const q = gsap.utils.selector(container);
+
   useEffect(() => {
     animation();
-    // itemMoveOnAnimation();
     return () => {
-      scrollTrigger.current.kill();
+      scrollTrigger.current?.kill();
     };
   }, []);
 
   function animation() {
-    console.log('animation start');
     const panelAnimation = gsap.timeline({ paused: true });
 
-    panelAnimation.to(q('#panel'), { y: '-100%', duration: 8 });
-    //TODO gallery-logo show
-    panelAnimation.to(q('#gallery-logo'), {
-      scale: 1.2,
-      ease: 'power1.inOut',
-      duration: 1
-    });
-    panelAnimation.to(q('#gallery-logo'), {
-      duration: 0.7
-    });
+    panelAnimation
+      .to(q('#panel'), {
+        y: '-100%',
+        duration: 8
+      })
+      .to(q('#gallery-logo'), {
+        duration: 0.7
+      });
 
     scrollTrigger.current = ScrollTrigger.create({
       animation: panelAnimation,
@@ -47,135 +45,15 @@ export default function Gallery({ id }) {
     });
   }
 
-  function itemMoveOnAnimation() {
-    gsap.fromTo(
-      q('#L11'),
-      { y: 500, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L1'),
-          start: 'center 60%',
-          end: '+=500',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L12'),
-      { y: 800, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L1'),
-          start: 'center 60%',
-          end: '+=800',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L21'),
-      { y: 600, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L2'),
-          start: 'center 60%',
-          end: '+=400',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L22'),
-      { y: 700, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L2'),
-          start: 'center 60%',
-          end: '+=600',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L23'),
-      { y: 800, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L2'),
-          start: 'center 60%',
-          end: '+=800',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L31'),
-      { y: 800, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L3'),
-          start: 'center 60%',
-          end: '+=800',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L32'),
-      { y: 500, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L3'),
-          start: 'center 60%',
-          end: '+=700',
-          scrub: 1
-        }
-      }
-    );
-    gsap.fromTo(
-      q('#L41'),
-      { y: 500, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: q('#L4'),
-          start: 'center 60%',
-          end: '+=500',
-          scrub: 1
-        }
-      }
-    );
-  }
-  //TODO RWD
-
   return (
     <div
       ref={container}
       id={id}
       className="relative flex h-screen w-full flex-col items-center justify-center">
-      <button
-        id="gallery-logo"
-        className="text-display-1 col-start-1 col-end-13 row-start-3 -mt-10 mb-10 place-self-center text-center text-pr-1">
-        Gallery
-      </button>
+      <GalleryCanvas />
       <div
         id="panel"
-        className="absolute left-0 top-0 w-full px-14 py-24 sm:px-4">
+        className="absolute  left-0 top-[100vh] w-full px-14 py-24 sm:px-4">
         <div className="grid w-full grid-flow-dense gap-3 sm:flex sm:flex-col">
           <div className="text-head-3 col-start-2 col-end-3 place-self-start text-sec-3">
             <div>SUMMER</div>
