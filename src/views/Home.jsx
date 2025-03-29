@@ -73,7 +73,7 @@ export default function Home({ isStart }) {
           isStart={isPageStart}
           popupOpen={() => setPopupState(true)}
         />
-        {/* <Story id="story" className="-z-10" /> */}
+        <Story id="story" className="-z-10" />
         <Card className="z-10" />
         <Banner />
         <Gallery id="gallery" className="mt-[-2px]" />

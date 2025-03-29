@@ -184,7 +184,7 @@ export default function GalleryCanvas() {
     <div
       ref={canvasRef}
       id="gallery-logo"
-      className="dev-red absolute left-0 top-0 h-full w-full"
+      className="absolute left-0 top-0 h-full w-full"
     />
   );
 }

@@ -17,8 +17,7 @@ export default function Gallery({ id }) {
   const q = gsap.utils.selector(container);
 
   useEffect(() => {
-    // animation();
-    // itemMoveOnAnimation();
+    animation();
     return () => {
       scrollTrigger.current?.kill();
     };
@@ -42,38 +41,7 @@ export default function Gallery({ id }) {
       start: 'top top',
       end: '+=3500',
       pin: true,
-      scrub: 1,
-      markers: true
-    });
-  }
-
-  function itemMoveOnAnimation() {
-    const items = [
-      { id: 'L11', y: 500, trigger: 'L1', end: 500 },
-      { id: 'L12', y: 800, trigger: 'L1', end: 800 },
-      { id: 'L21', y: 600, trigger: 'L2', end: 400 },
-      { id: 'L22', y: 700, trigger: 'L2', end: 600 },
-      { id: 'L23', y: 800, trigger: 'L2', end: 800 },
-      { id: 'L31', y: 800, trigger: 'L3', end: 800 },
-      { id: 'L32', y: 500, trigger: 'L3', end: 700 },
-      { id: 'L41', y: 500, trigger: 'L4', end: 500 }
-    ];
-
-    items.forEach(({ id, y, trigger, end }) => {
-      gsap.fromTo(
-        q(`#${id}`),
-        { y, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          scrollTrigger: {
-            trigger: q(`#${trigger}`),
-            start: 'center 60%',
-            end: `+=${end}`,
-            scrub: 1
-          }
-        }
-      );
+      scrub: 1
     });
   }
 
@@ -81,11 +49,11 @@ export default function Gallery({ id }) {
     <div
       ref={container}
       id={id}
-      className="dev-green relative flex h-screen w-full flex-col items-center justify-center">
+      className="relative flex h-screen w-full flex-col items-center justify-center">
       <GalleryCanvas />
-      {/* <div
+      <div
         id="panel"
-        className="dev-blue absolute  left-0 top-[100vh] w-full px-14 py-24 sm:px-4">
+        className="absolute  left-0 top-[100vh] w-full px-14 py-24 sm:px-4">
         <div className="grid w-full grid-flow-dense gap-3 sm:flex sm:flex-col">
           <div className="text-head-3 col-start-2 col-end-3 place-self-start text-sec-3">
             <div>SUMMER</div>
@@ -172,7 +140,7 @@ export default function Gallery({ id }) {
             1997 Christopher Fairbank
           </GalleryItem>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
