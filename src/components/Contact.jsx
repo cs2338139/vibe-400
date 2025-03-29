@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap/gsap-core';
 import PropTypes from 'prop-types';
+import ContactNumber from './Contact-Number';
 
 Contact.propTypes = {
   id: PropTypes.string.isRequired
@@ -11,7 +12,6 @@ export default function Contact({ id }) {
   const contact = useRef();
 
   function OverImg(event) {
-    // mouse.current.style.display = 'block';
     gsap.to(mouse.current, {
       duration: 0.3,
       opacity: 1,
@@ -29,7 +29,6 @@ export default function Contact({ id }) {
   }
 
   function OutImg() {
-    // mouse.current.style.display = 'none';
     gsap.to(mouse.current, {
       duration: 0.3,
       opacity: 0,
@@ -67,18 +66,7 @@ export default function Contact({ id }) {
           onMouseMove={OverImg}
           ref={target}
           onMouseLeave={OutImg}>
-          <div className="absolute my-14 -translate-y-14 whitespace-nowrap text-center font-PP-Right-Didone text-[64px] font-[300] text-pr-1">
-            <span>+</span>
-            <span>0</span>
-            <span>9</span>
-            <span>2</span>
-            <span> 9</span>
-            <span>8</span>
-            <span>7</span>
-            <span> 0</span>
-            <span>0</span>
-            <span>9</span>
-          </div>
+          <ContactNumber />
         </div>
 
         <div className="text-display-1 none pointer-events-none absolute bottom-[-3.625rem] left-[-2.375rem] text-sec-3 sm:top-[43rem]">
