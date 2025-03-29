@@ -1,11 +1,23 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react';
+import {
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  forwardRef,
+  useImperativeHandle
+} from 'react';
 
-const ContactNumber = () => {
+const ContactNumber = forwardRef((props, ref) => {
+  const cursorRef = useRef({ x: window.innerWidth, y: window.innerHeight });
+
+  useImperativeHandle(ref, () => ({
+    cursorRef
+  }));
   // Refs
   const titleRef = useRef(null);
   const charsRef = useRef([]);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const cursorRef = useRef({ x: window.innerWidth, y: window.innerHeight });
+  //   const cursorRef = useRef({ x: window.innerWidth, y: window.innerHeight });
   const maxDistRef = useRef(0);
   const animationFrameRef = useRef(null);
 
@@ -95,14 +107,14 @@ const ContactNumber = () => {
     }
   }, [phoneNumberText.length, vfontConfig.scale]);
 
-  const handleMouseMove = useCallback((e) => {
-    cursorRef.current.x = e.clientX;
-  }, []);
+  //   const handleMouseMove = useCallback((e) => {
+  //     cursorRef.current.x = e.clientX;
+  //   }, []);
 
-  const handleTouchMove = useCallback((e) => {
-    const touch = e.touches[0];
-    cursorRef.current.x = touch.clientX;
-  }, []);
+  //   const handleTouchMove = useCallback((e) => {
+  //     const touch = e.touches[0];
+  //     cursorRef.current.x = touch.clientX;
+  //   }, []);
 
   // Initialize characters
   useEffect(() => {
@@ -110,19 +122,19 @@ const ContactNumber = () => {
     handleResize();
 
     window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    // window.addEventListener('mousemove', handleMouseMove);
+    // window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      //   window.removeEventListener('mousemove', handleMouseMove);
+      //   window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [
     createChar,
     handleResize,
-    handleMouseMove,
-    handleTouchMove,
+    // handleMouseMove,
+    // handleTouchMove,
     phoneNumberText
   ]);
 
@@ -195,6 +207,8 @@ const ContactNumber = () => {
       </h1>
     </div>
   );
-};
+});
+
+ContactNumber.displayName = 'ContactNumber';
 
 export default ContactNumber;

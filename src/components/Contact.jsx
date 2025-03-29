@@ -10,8 +10,11 @@ export default function Contact({ id }) {
   const mouse = useRef();
   const target = useRef();
   const contact = useRef();
-
+  const contactNumberRef = useRef();
   function OverImg(event) {
+    const { cursorRef } = contactNumberRef.current;
+    cursorRef.current.x = event.clientX;
+
     gsap.to(mouse.current, {
       duration: 0.3,
       opacity: 1,
@@ -66,7 +69,7 @@ export default function Contact({ id }) {
           onMouseMove={OverImg}
           ref={target}
           onMouseLeave={OutImg}>
-          <ContactNumber />
+          <ContactNumber ref={contactNumberRef} />
         </div>
 
         <div className="text-display-1 none pointer-events-none absolute bottom-[-3.625rem] left-[-2.375rem] text-sec-3 sm:top-[43rem]">
