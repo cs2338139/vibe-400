@@ -9,88 +9,87 @@ import {
 
 const ContactNumber = forwardRef((props, ref) => {
   const cursorRef = useRef({ x: window.innerWidth, y: window.innerHeight });
+  const titleRef = useRef(null);
+  const charsRef = useRef([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const maxDistRef = useRef(0);
+  const animationFrameRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
     cursorRef
   }));
-  // Refs
-  const titleRef = useRef(null);
-  const charsRef = useRef([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  //   const cursorRef = useRef({ x: window.innerWidth, y: window.innerHeight });
-  const maxDistRef = useRef(0);
-  const animationFrameRef = useRef(null);
 
-  // Constants
   const phoneNumberText = '+092 987 009';
-  const vfontConfig = {
-    scale: false,
-    flex: true,
-    alpha: false,
-    stroke: false,
-    width: true,
-    weight: true,
-    italic: true
-  };
+  const vfontConfig = useMemo(
+    () => ({
+      scale: false,
+      flex: true,
+      alpha: false,
+      stroke: false,
+      width: true,
+      weight: true,
+      italic: true
+    }),
+    []
+  );
 
-  // Helper functions
   const calculateDistance = useCallback((a, b) => {
     const dx = b.x - a.x;
     return Math.sqrt(dx ** 2);
   }, []);
 
+  class Char {
+    constructor(char, calculateDistance, mouseRef, maxDistRef) {
+      this.char = char;
+      this.el = null;
+      this.pos = null;
+      this.wdth = 100;
+      this.wght = 400;
+      this.alpha = 1;
+      this.ital = 0;
+      this.calculateDistance = calculateDistance;
+      this.mouseRef = mouseRef;
+      this.maxDistRef = maxDistRef;
+    }
+
+    setElement(element) {
+      this.el = element;
+    }
+
+    getDist() {
+      if (!this.el) return 0;
+      this.pos = this.el.getBoundingClientRect();
+      return this.calculateDistance(this.mouseRef.current, {
+        x: this.pos.x + this.pos.width / 1.75
+      });
+    }
+
+    getAttr(dist, min, max) {
+      const wght = max - Math.abs((max * dist) / this.maxDistRef.current);
+      return Math.max(min, wght + min);
+    }
+
+    update(args) {
+      const dist = this.getDist();
+      this.wdth = args.wdth ? Math.floor(this.getAttr(dist, 5, 200)) : 100;
+      this.wght = args.wght ? Math.floor(this.getAttr(dist, 100, 800)) : 400;
+      this.alpha = args.alpha ? this.getAttr(dist, 0, 1).toFixed(2) : 1;
+      this.ital = args.ital ? this.getAttr(dist, 0, 1).toFixed(2) : 0;
+      this.draw();
+    }
+
+    draw() {
+      if (!this.el) return;
+      this.el.style.opacity = this.alpha;
+      this.el.style.fontVariationSettings = `'wght' ${this.wght}, 'wdth' ${this.wdth}, 'ital' ${this.ital}`;
+    }
+  }
+
   const createChar = useCallback(
-    (char) => {
-      const charObj = {
-        char,
-        el: null,
-        pos: null,
-        wdth: 100,
-        wght: 400,
-        alpha: 1,
-        ital: 0,
-
-        setElement(element) {
-          this.el = element;
-        },
-
-        getDist() {
-          if (!this.el) return 0;
-          this.pos = this.el.getBoundingClientRect();
-          return calculateDistance(mouseRef.current, {
-            x: this.pos.x + this.pos.width / 1.75
-          });
-        },
-
-        getAttr(dist, min, max) {
-          const wght = max - Math.abs((max * dist) / maxDistRef.current);
-          return Math.max(min, wght + min);
-        },
-
-        update(args) {
-          const dist = this.getDist();
-          this.wdth = args.wdth ? Math.floor(this.getAttr(dist, 5, 200)) : 100;
-          this.wght = args.wght
-            ? Math.floor(this.getAttr(dist, 100, 800))
-            : 400;
-          this.alpha = args.alpha ? this.getAttr(dist, 0, 1).toFixed(2) : 1;
-          this.ital = args.ital ? this.getAttr(dist, 0, 1).toFixed(2) : 0;
-          this.draw();
-        },
-
-        draw() {
-          if (!this.el) return;
-          this.el.style.opacity = this.alpha;
-          this.el.style.fontVariationSettings = `'wght' ${this.wght}, 'wdth' ${this.wdth}, 'ital' ${this.ital}`;
-        }
-      };
-
-      return charObj;
-    },
+    (char) => new Char(char, calculateDistance, mouseRef, maxDistRef),
     [calculateDistance]
   );
 
-  // Event handlers
   const handleResize = useCallback(() => {
     if (!titleRef.current) return;
 
@@ -107,38 +106,29 @@ const ContactNumber = forwardRef((props, ref) => {
     }
   }, [phoneNumberText.length, vfontConfig.scale]);
 
-  //   const handleMouseMove = useCallback((e) => {
-  //     cursorRef.current.x = e.clientX;
-  //   }, []);
+  const renderChars = useCallback(() => {
+    if (!titleRef.current) return;
 
-  //   const handleTouchMove = useCallback((e) => {
-  //     const touch = e.touches[0];
-  //     cursorRef.current.x = touch.clientX;
-  //   }, []);
+    maxDistRef.current = titleRef.current.getBoundingClientRect().width / 2;
 
-  // Initialize characters
+    charsRef.current.forEach((char) => {
+      char.update({
+        wght: vfontConfig.weight,
+        wdth: vfontConfig.width,
+        ital: vfontConfig.italic,
+        alpha: vfontConfig.alpha
+      });
+    });
+  }, [vfontConfig]);
+
   useEffect(() => {
     charsRef.current = Array.from(phoneNumberText).map(createChar);
     handleResize();
 
     window.addEventListener('resize', handleResize);
-    // window.addEventListener('mousemove', handleMouseMove);
-    // window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    return () => window.removeEventListener('resize', handleResize);
+  }, [createChar, handleResize, phoneNumberText]);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      //   window.removeEventListener('mousemove', handleMouseMove);
-      //   window.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [
-    createChar,
-    handleResize,
-    // handleMouseMove,
-    // handleTouchMove,
-    phoneNumberText
-  ]);
-
-  // Set elements for characters
   useEffect(() => {
     if (!titleRef.current) return;
 
@@ -150,23 +140,7 @@ const ContactNumber = forwardRef((props, ref) => {
     });
   }, []);
 
-  // Animation loop
   useEffect(() => {
-    const renderChars = () => {
-      if (!titleRef.current) return;
-
-      maxDistRef.current = titleRef.current.getBoundingClientRect().width / 2;
-
-      charsRef.current.forEach((char) => {
-        char.update({
-          wght: vfontConfig.weight,
-          wdth: vfontConfig.width,
-          ital: vfontConfig.italic,
-          alpha: vfontConfig.alpha
-        });
-      });
-    };
-
     const animate = () => {
       const { x: mouseX } = mouseRef.current;
       const { x: cursorX } = cursorRef.current;
@@ -184,9 +158,8 @@ const ContactNumber = forwardRef((props, ref) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [vfontConfig]);
+  }, [renderChars]);
 
-  // Memoized phone number spans
   const phoneNumber = useMemo(
     () =>
       phoneNumberText.split('').map((char, index) => (
