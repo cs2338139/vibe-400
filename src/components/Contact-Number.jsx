@@ -171,7 +171,7 @@ const ContactNumber = forwardRef((props, ref) => {
   );
 
   return (
-    <div className="absolute my-14 -translate-y-14 whitespace-nowrap text-center text-[64px] font-[300] text-pr-1">
+    <div className="absolute my-14 -translate-y-14 whitespace-nowrap text-center font-PP-Cirka  text-pr-1">
       <h1
         id="title"
         ref={titleRef}
