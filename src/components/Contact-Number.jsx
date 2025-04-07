@@ -4,7 +4,8 @@ import {
   useCallback,
   useMemo,
   forwardRef,
-  useImperativeHandle
+  useImperativeHandle,
+  useState
 } from 'react';
 
 const ContactNumber = forwardRef((props, ref) => {
@@ -14,6 +15,13 @@ const ContactNumber = forwardRef((props, ref) => {
   const mouseRef = useRef({ x: 0, y: 0 });
   const maxDistRef = useRef(0);
   const animationFrameRef = useRef(null);
+  const [type, setType] = useState(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    setType(type);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     cursorRef
@@ -171,7 +179,8 @@ const ContactNumber = forwardRef((props, ref) => {
   );
 
   return (
-    <div className="absolute my-14 -translate-y-14 whitespace-nowrap text-center font-PP-Cirka  text-pr-1">
+    <div
+      className={`${type === 'PP-Cirka' ? 'font-PP-Cirka' : ''} absolute my-14 -translate-y-14 whitespace-nowrap text-center text-pr-1`}>
       <h1
         id="title"
         ref={titleRef}
