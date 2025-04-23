@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap/gsap-core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import ThreeJS from './ThreeJS';
+import ThreeJS from './ThreeJS';
 import PropTypes from 'prop-types';
 
 Story.propTypes = {
@@ -92,7 +92,7 @@ export default function Story({ className, id }) {
         className="text-display-1 -ml-80 text-pr-2 sm:ml-0 sm:mt-0">
         Story
       </div>
-      {/* <ThreeJS className="center sm:unCenter absolute z-10 h-[26rem] w-[26rem] overflow-hidden sm:static"></ThreeJS> */}
+      <ThreeJS className="center sm:unCenter absolute z-10 h-[26rem] w-[26rem] overflow-hidden sm:static"></ThreeJS>
       <div className="flex w-[29.625rem] flex-col items-center text-center text-pr-2 sm:w-[19.5rem] ">
         <div className="text-heading-2 mb-8 sm:mb-6">Story</div>
         <div className="text-body-2">

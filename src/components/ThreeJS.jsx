@@ -86,11 +86,9 @@ export default function ThreeJS({ className }) {
         mainControls.autoRotateSpeed = 2;
         controls = mainControls;
 
-        const model = await loadModel(
-          `${baseUrl}/model/unicorn gumroad-modified21.glb`
-        );
+        const model = await loadModel(`${baseUrl}/model/Car.glb`);
 
-        model.scale.set(42, 42, 42);
+        model.scale.set(3, 3, 3);
         model.castShadow = true;
         scene.add(model);
 
@@ -317,7 +315,6 @@ export default function ThreeJS({ className }) {
 
             folder.hide();
           });
-
 
           gui
             .add(
